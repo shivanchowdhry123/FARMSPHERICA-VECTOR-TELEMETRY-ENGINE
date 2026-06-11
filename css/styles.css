@@ -1,4 +1,4 @@
-/* FARMSPHERICA VECTOR TELEMETRY ENGINE - REVISED UI 3.7 */
+/* FARMSPHERICA VECTOR TELEMETRY ENGINE - FINAL CONSOLIDATED UI 3.8 */
 :root {
     --bg-main: #fcfbf9;      
     --side-panel: #1a1c1e;   
@@ -7,7 +7,6 @@
     --border: #e5e7eb;       
     --accent: #3b82f6;       
     --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
-    /* Elevated shadow for tactile feedback */
     --shadow-hover: 0 4px 6px -1px rgba(0,0,0,0.2);
     --transition-speed: 0.3s;
     --easing: cubic-bezier(0.4, 0, 0.2, 1);
@@ -50,13 +49,12 @@ aside {
     border-left: 3px solid transparent;
 }
 
-/* POLISHED STATE LOGIC: Transition-ready active states */
+/* Polished Active States */
 body[data-page="dashboard"] .nav-dashboard,
 body[data-page="nav-logger"] .nav-logger,
-body[data-page="analytics"] .nav-analytics 
-body[data-page="analytics"] a.nav-analytics,
-body[data-page="nodes"] a.nav-nodes,
-body[data-page="settings"] a.nav-settings {
+body[data-page="analytics"] .nav-analytics,
+body[data-page="nodes"] .nav-nodes,
+body[data-page="settings"] .nav-settings {
     background: rgba(255,255,255,0.06); 
     border-left: 3px solid var(--accent); 
     color: #ffffff !important;
@@ -66,7 +64,6 @@ body[data-page="settings"] a.nav-settings {
     color: #ffffff; 
     background: rgba(255,255,255,0.08); 
     border-left: 3px solid rgba(59, 130, 246, 0.8);
-    /* Subtle depth added on hover */
     box-shadow: inset var(--shadow-hover);
 }
 
@@ -92,7 +89,7 @@ header h2 { font-family: 'Georgia', serif; font-size: 2.25rem; font-weight: norm
 
 .dashboard-grid { 
     display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     gap: 2rem; 
     max-width: 1200px;
 }
