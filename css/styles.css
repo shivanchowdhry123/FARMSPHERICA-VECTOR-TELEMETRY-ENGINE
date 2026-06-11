@@ -42,22 +42,26 @@ aside {
     color: #94a3b8; 
     text-decoration: none; 
     font-size: 0.95rem;
-    transition: all 0.2s ease;
+    transition: all var(--transition-speed) ease;
+    border-left: 3px solid transparent;
 }
-
 /* HIGH-SPECIFICITY PATH MATCHING - ENSURE HTML BODY HAS CORRECT DATA-PAGE */
-body[data-page="dashboard"] a.nav-dashboard,
-body[data-page="logger"] a.nav-logger,
+body[data-page="dashboard"] .nav-dashboard,
+body[data-page="nav-logger"] .nav-logger,
+body[data-page="analytics"] .nav-analytics 
 body[data-page="analytics"] a.nav-analytics,
 body[data-page="nodes"] a.nav-nodes,
 body[data-page="settings"] a.nav-settings {
-    background: rgba(255,255,255,0.05); 
+    background: rgba(255,255,255,0.06); 
     border-left: 3px solid var(--accent); 
     color: #ffffff !important;
 }
 
-#page-list a:hover { color: #ffffff; background: rgba(255,255,255,0.03); }
-
+#page-list a:hover { 
+    color: #ffffff; 
+    background: rgba(255,255,255,0.04); 
+    border-left: 3px solid rgba(59, 130, 246, 0.4);
+}
 .platform-name { 
     padding: 0 2rem;
     font-size: 0.65rem; 
