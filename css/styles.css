@@ -1,5 +1,31 @@
-:root { --alabaster: #fcfbf9; --sage: #2e4f3c; --charcoal: #1a1c1e; }
-body { background-color: var(--alabaster); color: var(--charcoal); font-family: serif; margin: 0; }
-nav { border-bottom: 1px solid var(--charcoal); padding: 1rem; display: flex; align-items: center; gap: 20px; }
-.logo { height: 40px; width: auto; }
-ul { display: flex; list-style: none; gap: 15px; }
+:root { 
+    --bg: #fcfbf9; 
+    --panel: #1a1c1e; 
+    --text-light: #ffffff;
+    --text-dark: #1a1c1e;
+    --accent: #3b82f6; 
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; height: 100vh; color: var(--text-dark); }
+
+.app-container { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
+
+/* Sidebar Enhancements */
+aside { background: var(--panel); color: var(--text-light); padding: 2rem 1.5rem; display: flex; flex-direction: column; justify-content: space-between; }
+.logo-area { display: flex; align-items: center; gap: 15px; font-size: 1.2rem; font-weight: bold; margin-bottom: 2rem; }
+.logo { height: 40px; }
+
+#page-list ul { list-style: none; }
+#page-list li { margin: 1.5rem 0; }
+#page-list a { color: #a0aec0; text-decoration: none; font-size: 1.1rem; transition: color 0.2s; }
+#page-list a:hover { color: var(--text-light); }
+
+.platform-name { font-size: 0.8rem; color: #718096; text-transform: uppercase; letter-spacing: 1px; }
+
+/* Header/Main */
+.main-content { display: flex; flex-direction: column; }
+header { display: flex; justify-content: space-between; padding: 1.5rem 2rem; border-bottom: 1px solid #e2e8f0; align-items: center; }
+header h2 { font-size: 1.5rem; }
+
+#view-port { padding: 2rem; font-size: 1.1rem; }

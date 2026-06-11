@@ -2,23 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Farmspherica | Portal</title>
     <link rel="stylesheet" href="css/styles.css">
+    <title>Farmspherica | Dashboard</title>
 </head>
 <body>
-    <nav>
-        <img src="images/logo.svg" alt="Farmspherica Logo" class="logo">
-        <ul>
-            <li><a href="index.html">Portal</a></li>
-            <li><a href="logger.html">Logger</a></li>
-            <li><a href="analytics.html">Analytics</a></li>
-            <li><a href="settings.html">Settings</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section id="vitality-summary"><h2>Facility Vitality Index</h2><div id="fvi-display">--%</div></section>
-        <section id="log-console"><h2>Manual Advisory Log</h2></section>
-    </main>
+    <div class="app-container">
+        <aside id="sidebar">
+            <div class="logo-area">
+                <img src="images/logo.svg" class="logo">
+                <span>Farmspherica</span>
+            </div>
+            <nav id="page-list">
+                <ul>
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="logger.html">Logger</a></li>
+                    <li><a href="analytics.html">Analytics</a></li>
+                    <li><a href="nodes.html">Nodes</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                </ul>
+            </nav>
+            <div class="platform-name">VECTOR ENGINE v1.0</div>
+        </aside>
+
+        <div class="main-content">
+            <header>
+                <button id="toggle-sidebar">☰</button>
+                <h2 id="page-title">Dashboard</h2>
+                <div class="user-menu" id="user-menu">
+                    <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
+                    <div id="options-bar">
+                        <p>Profile</p>
+                        <p>Logout</p>
+                    </div>
+                </div>
+            </header>
+            <main id="view-port">
+                </main>
+        </div>
+    </div>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
