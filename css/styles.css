@@ -115,3 +115,27 @@ header h2 { font-family: 'Georgia', serif; font-size: 2.25rem; font-weight: norm
     color: #94a3b8;
     font-size: 0.85rem;
 }
+
+ .delete-btn-container { 
+    display: none; 
+    cursor: pointer; 
+    border: 1px solid #ef4444; 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    color: #ef4444; 
+    background: transparent;
+    font-size: 0.85rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.delete-btn-container:hover { 
+    background: #ef4444; 
+    color: white; 
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}
+tr:hover .delete-btn-container { display: inline-flex; }
+.bin-icon { width: 16px; height: 16px; fill: currentColor; }
