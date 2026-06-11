@@ -1,4 +1,4 @@
-/* FARMSPHERICA VECTOR TELEMETRY ENGINE - REVISED UI 3.2 */
+/* FARMSPHERICA VECTOR TELEMETRY ENGINE - REVISED UI 3.3 */
 :root {
     --bg-main: #fcfbf9;      
     --side-panel: #1a1c1e;   
@@ -45,7 +45,7 @@ aside {
     transition: all 0.2s ease;
 }
 
-/* THE CORRECTED SELECTOR: Using high-specificity path matching */
+/* HIGH-SPECIFICITY PATH MATCHING - ENSURE HTML BODY HAS CORRECT DATA-PAGE */
 body[data-page="dashboard"] a.nav-dashboard,
 body[data-page="logger"] a.nav-logger,
 body[data-page="analytics"] a.nav-analytics,
