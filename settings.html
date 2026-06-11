@@ -22,21 +22,45 @@
                     <li><a href="settings.html">Settings</a></li>
                 </ul>
             </nav>
-             <div class="platform-name">VECTOR ENGINE v1.0</div>
+            <div class="platform-name">VECTOR ENGINE v1.0</div>
         </aside>
 
         <div class="main-content">
             <header>
-                <button id="toggle-sidebar">☰</button>
-                <h2 id="page-title">Settings</h2>
+                <h2>Settings</h2>
                 <div class="user-menu" id="user-menu">
                     <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
                     <div id="options-bar">
-                    <p>Profile | Logout</p>
+                        <p>Profile | Logout</p>
+                    </div>
                 </div>
             </header>
             <main id="view-port">
-                <p>System operational.</p>
+                <section style="max-width: 600px;">
+                    <div style="margin-bottom: 30px;">
+                        <h3>System Theme</h3>
+                        <select style="width: 100%; padding: 10px; margin-top: 10px;">
+                            <option>Eco-Minimalist (Default)</option>
+                            <option>High-Contrast Dark</option>
+                            <option>Monochrome</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <h3>Measurement Metrics</h3>
+                        <label style="display: block; margin: 10px 0;">
+                            <input type="radio" name="units" checked> Metric (SI)
+                        </label>
+                        <label style="display: block; margin: 10px 0;">
+                            <input type="radio" name="units"> Imperial
+                        </label>
+                    </div>
+
+                    <div>
+                        <h3>Data Sync</h3>
+                        <button style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Initialize Cloud Sync</button>
+                    </div>
+                </section>
             </main>
         </div>
     </div>

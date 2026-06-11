@@ -1,17 +1,15 @@
-/* FARMSPHERICA VECTOR TELEMETRY ENGINE - UI SCHEMA */
+/* FARMSPHERICA VECTOR TELEMETRY ENGINE - ECO-MINIMALIST AESTHETIC */
 :root {
-    --bg-main: #fcfbf9;       /* Alabaster */
-    --side-panel: #1a1c1e;    /* Deep Charcoal */
-    --text-primary: #2e4f3c;  /* Deep Moss */
-    --text-sidebar: #a0aec0;  /* Muted Slate */
-    --accent: #3b82f6;        /* Professional Blue */
-    --border: #e2e8f0;        /* Light Grey */
+    --bg-main: #fcfbf9;      /* Chalky Alabaster */
+    --side-panel: #1a1c1e;   /* Raw Charcoal */
+    --text-primary: #2e4f3c; /* Serene Sage */
+    --border: #d1d5db;       /* Sub-pixel hairline border */
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { 
-    font-family: 'Segoe UI', sans-serif; 
+    font-family: 'Georgia', 'Times New Roman', serif; /* Humanist Serif */
     height: 100vh; 
     width: 100vw; 
     overflow: hidden; 
@@ -25,11 +23,11 @@ body {
     height: 100vh;
 }
 
-/* Sidebar Styling */
+/* Sidebar */
 aside {
     background-color: var(--side-panel);
     color: #ffffff;
-    padding: 2rem 1.5rem;
+    padding: 3rem 2rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -40,29 +38,29 @@ aside {
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
 }
 
-.logo { width: 100px; height: auto; }
+.logo { width: 80px; height: auto; }
 
 #page-list ul { list-style: none; }
-#page-list li { margin: 1.5rem 0; }
+#page-list li { margin: 2rem 0; }
 #page-list a { 
-    color: var(--text-sidebar); 
+    color: #a0aec0; 
     text-decoration: none; 
     font-size: 1.1rem; 
-    transition: 0.2s;
+    letter-spacing: 0.5px;
 }
 #page-list a:hover { color: #ffffff; }
 
 .platform-name { 
-    font-size: 0.8rem; 
+    font-size: 0.7rem; 
     color: #4a5568; 
     text-transform: uppercase; 
-    letter-spacing: 2px; 
+    letter-spacing: 3px; 
 }
 
-/* Header & Content Styling */
+/* Main Content */
 .main-content { 
     display: flex; 
     flex-direction: column; 
@@ -74,22 +72,24 @@ header {
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    padding: 1.5rem 2rem; 
-    border-bottom: 1px solid var(--border); 
+    padding: 2rem 3rem; 
+    border-bottom: 0.5px solid var(--border); /* Hairline border */
 }
 
-#view-port { padding: 30px; font-size: 1.1rem; }
+#view-port { 
+    padding: 3rem; 
+    font-size: 1.2rem; 
+    line-height: 1.6;
+}
 
-/* Menu Interaction */
 .hidden { display: none; }
 #options-bar { 
     position: absolute; 
-    right: 2rem; 
-    top: 5rem; 
-    background: #ffffff; 
+    right: 3rem; 
+    top: 6rem; 
+    background: var(--bg-main); 
     padding: 1rem; 
-    border: 1px solid var(--border); 
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    border: 0.5px solid var(--border); 
     display: none; 
 }
 #options-bar.active { display: block; }
