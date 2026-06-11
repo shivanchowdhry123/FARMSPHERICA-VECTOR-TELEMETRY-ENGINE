@@ -1,9 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><link rel="stylesheet" href="css/styles.css"></head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmspherica | Analytics</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
 <body>
-    <nav><img src="images/logo.svg" class="logo"><ul><li><a href="index.html">Portal</a></li></ul></nav>
-    <main><canvas id="vector-canvas"></canvas></main>
+    <div class="app-container">
+        <aside id="sidebar">
+            <div class="logo-area">
+                <img src="images/logo.svg" alt="Logo" class="logo">
+                <span>Farmspherica</span>
+            </div>
+            <nav id="page-list">
+                <ul>
+                    <li><a href="index.html">Dashboard</a></li>
+                    <li><a href="logger.html">Logger</a></li>
+                    <li><a href="analytics.html">Analytics</a></li>
+                    <li><a href="nodes.html">Nodes</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                </ul>
+            </nav>
+             <div class="platform-name">VECTOR ENGINE v1.0</div>
+        </aside>
+
+        <div class="main-content">
+            <header>
+                <button id="toggle-sidebar">☰</button>
+                <h2 id="page-title">Analytics</h2>
+                <div class="user-menu" id="user-menu">
+                    <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
+                    <div id="options-bar">
+                    <p>Profile | Logout</p>
+                </div>
+            </header>
+            <main id="view-port">
+                <p>System operational.</p>
+            </main>
+        </div>
+    </div>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>

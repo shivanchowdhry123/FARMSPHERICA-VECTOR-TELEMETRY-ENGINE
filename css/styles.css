@@ -1,80 +1,95 @@
-/* Resetting everything so the browser stops guessing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* FARMSPHERICA VECTOR TELEMETRY ENGINE - UI SCHEMA */
+:root {
+    --bg-main: #fcfbf9;       /* Alabaster */
+    --side-panel: #1a1c1e;    /* Deep Charcoal */
+    --text-primary: #2e4f3c;  /* Deep Moss */
+    --text-sidebar: #a0aec0;  /* Muted Slate */
+    --accent: #3b82f6;        /* Professional Blue */
+    --border: #e2e8f0;        /* Light Grey */
 }
 
-body, html {
-    height: 100vh;
-    width: 100vw;
-    overflow: hidden;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #fcfbf9;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body { 
+    font-family: 'Segoe UI', sans-serif; 
+    height: 100vh; 
+    width: 100vw; 
+    overflow: hidden; 
+    background-color: var(--bg-main); 
+    color: var(--text-primary);
 }
 
-/* Main Layout Grid */
 .app-container {
     display: grid;
     grid-template-columns: 260px 1fr;
     height: 100vh;
-    width: 100vw;
 }
 
-/* Sidebar */
+/* Sidebar Styling */
 aside {
-    background-color: #1a1c1e;
+    background-color: var(--side-panel);
     color: #ffffff;
+    padding: 2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    justify-content: space-between;
 }
 
 .logo-area {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 40px;
+    gap: 15px;
+    margin-bottom: 2rem;
 }
 
-.logo {
-    width: 100px;
-    height: auto;
-    margin-bottom: 10px;
+.logo { width: 100px; height: auto; }
+
+#page-list ul { list-style: none; }
+#page-list li { margin: 1.5rem 0; }
+#page-list a { 
+    color: var(--text-sidebar); 
+    text-decoration: none; 
+    font-size: 1.1rem; 
+    transition: 0.2s;
+}
+#page-list a:hover { color: #ffffff; }
+
+.platform-name { 
+    font-size: 0.8rem; 
+    color: #4a5568; 
+    text-transform: uppercase; 
+    letter-spacing: 2px; 
 }
 
-#page-list ul {
-    list-style: none;
+/* Header & Content Styling */
+.main-content { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100vh; 
+    overflow-y: auto; 
 }
 
-#page-list li {
-    margin: 20px 0;
+header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 1.5rem 2rem; 
+    border-bottom: 1px solid var(--border); 
 }
 
-#page-list a {
-    color: #a0aec0;
-    text-decoration: none;
-    font-size: 1.1rem;
-}
+#view-port { padding: 30px; font-size: 1.1rem; }
 
-/* Main Content */
-.main-content {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    overflow-y: auto;
+/* Menu Interaction */
+.hidden { display: none; }
+#options-bar { 
+    position: absolute; 
+    right: 2rem; 
+    top: 5rem; 
+    background: #ffffff; 
+    padding: 1rem; 
+    border: 1px solid var(--border); 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    display: none; 
 }
-
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 1px solid #e2e8f0;
-    align-items: center;
-}
-
-#view-port {
-    padding: 30px;
-    font-size: 1.1rem;
-}
+#options-bar.active { display: block; }
