@@ -25,7 +25,9 @@ body {
     transition: background var(--transition-speed); 
 }
 
-.app-container { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
+.app-container { display: grid; grid-template-columns: 260px 1fr; height: 100vh; transition: grid-template-columns var(--transition-speed) var(--easing); }
+.app-container.sidebar-collapsed { grid-template-columns: 0px 1fr; }
+.app-container.sidebar-collapsed aside { display: none !important; }
 
 /* Sidebar */
 aside { 

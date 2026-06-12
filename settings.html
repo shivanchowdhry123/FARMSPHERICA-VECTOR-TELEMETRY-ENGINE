@@ -39,7 +39,7 @@
                 <section style="max-width: 600px;">
                     <div style="margin-bottom: 30px;">
                         <h3>System Theme</h3>
-                        <button id="theme-toggle" style="background: var(--accent); color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                        <button data-action="toggle-theme" id="theme-toggle" style="background: var(--accent); color: white; padding: 10px 20px; border: none; cursor: pointer;">
                             Toggle Light/Dark Mode
                         </button>
                     </div>
@@ -56,15 +56,16 @@
 
                     <div style="margin-bottom: 30px;">
                         <h3>Data Sync</h3>
-                        <button id="export-data" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Export Telemetry Data</button>
-                        <input type="file" id="import-data" accept=".json" style="margin-left: 10px;">Initialize Cloud Sync
+                        <button data-action="export-data" id="export-data" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Export Telemetry Data</button>
+                        <input type="file" id="import-data" accept=".json" style="margin-left: 10px;">
+                        <button data-action="sync-data" id="sync-data" style="background: var(--accent); color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Initialize Cloud Sync</button>
                     </div>
 
                     <div style="margin-bottom: 30px;">
                         <h3>Account Details</h3>
                         <p>Email: [EMAIL_ADDRESS]</p>
                         <p>Password: ********</p>
-                        <button style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Change Password</button>
+                        <button data-action="change-password" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Change Password</button>
                     </div>
 
                     <div style="margin-bottom: 30px;">
@@ -89,17 +90,17 @@
                     
                     <div style="margin-bottom: 30px;">
                         <h3>Save</h3>
-                        <button style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Save Changes</button>
+                        <button data-action="save-settings" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Save Changes</button>
                     </div>
                         
                     <div style="margin-bottom: 30px;">
                         <h3>Delete Account</h3>
-                        <button style="background: #e20b0b; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Delete Account</button>
+                        <button data-action="delete-account" style="background: #e20b0b; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Delete Account</button>
                     </div>
 
                     <div style="margin-bottom: 30px;">
                         <h3>Help & Support</h3>
-                        <button style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Get Help</button>
+                        <button data-action="get-help" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Get Help</button>
                     </div>
 
                     <div style="margin-bottom: 30px;">

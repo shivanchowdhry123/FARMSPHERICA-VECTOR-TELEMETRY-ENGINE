@@ -7,7 +7,6 @@ export function updateDashboardCards() {
     // Get the most recent entry
     const latest = data[data.length - 1];
 
-    // Assuming you have elements with these IDs in index.html
     const phEl = document.getElementById('card-ph');
     const ecEl = document.getElementById('card-ec');
     const tempEl = document.getElementById('card-temp');
@@ -17,81 +16,135 @@ export function updateDashboardCards() {
     if (tempEl) tempEl.textContent = latest.temp;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initializeState();
-    
-    // Apply saved theme immediately on load
+// Apply saved theme state globally as early as possible
+const applySavedTheme = () => {
     const savedTheme = localStorage.getItem('theme') || 'light';
     document.body.dataset.theme = savedTheme;
-    
-    setupThemeToggle();
+};
+// Run theme initialization immediately if body is ready, or on DOMContentLoaded
+if (document.body) {
+    applySavedTheme();
+} else {
+    document.addEventListener('DOMContentLoaded', applySavedTheme);
+}
 
-    // Logger page: Add button and Table rendering
-    if (document.body.dataset.page === 'logger') {
-        renderLoggerTable();
+// Centralized Event Controller using Global Event Delegation
+document.addEventListener('click', (e) => {
+    // Locate the closest interactive element with a data-action attribute
+    const actionEl = e.target.closest('[data-action]');
+    if (!actionEl) return;
+
+    const action = actionEl.dataset.action;
+
+    switch (action) {
+        case 'toggle-theme':
+            const currentTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
+            document.body.dataset.theme = currentTheme;
+            localStorage.setItem('theme', currentTheme);
+            break;
+
+        case 'toggle-sidebar':
+            const appContainer = document.querySelector('.app-container');
+            if (appContainer) {
+                appContainer.classList.toggle('sidebar-collapsed');
+            }
+            break;
+
+        case 'add-record':
+            e.preventDefault();
+            const id = (typeof crypto !== 'undefined' && crypto.randomUUID) ? crypto.randomUUID() : Math.random().toString(36).substring(2);
+            addRecord({ 
+                id, 
+                date: new Date().toISOString().split('T')[0],
+                ph: 7.0, temp: 22.0, ec: 1.5 
+            });
+            renderLoggerTable();
+            break;
+
+        case 'delete-record':
+            const recordId = actionEl.dataset.id;
+            if (recordId) {
+                removeRecord(recordId);
+                renderLoggerTable();
+            }
+            break;
+
+        case 'export-data':
+            exportTelemetryBackup();
+            break;
+
+        case 'sync-data':
+            alert("Synchronizing telemetry vectors to cloud database...");
+            break;
+
+        case 'change-password':
+            alert("Password change form loaded.");
+            break;
+
+        case 'save-settings':
+            alert("Configuration settings updated successfully.");
+            break;
+
+        case 'delete-account':
+            alert("Warning: Account deletion process initialized.");
+            break;
+
+        case 'get-help':
+            alert("Connecting to Farmspherica support systems...");
+            break;
+
+        default:
+            console.warn(`Unhandled data-action: ${action}`);
     }
+});
 
-    // Settings page: Export/Import and Theme
-    if (document.body.dataset.page === 'settings') {
-        const exportBtn = document.getElementById('export-data');
-        const importInput = document.getElementById('import-data');
-
-        if (exportBtn) {
-            exportBtn.addEventListener('click', () => {
-                exportTelemetryBackup();
-            });
-        }
-        
-        if (importInput) {
-            importInput.addEventListener('change', async (e) => {
-                if (e.target.files && e.target.files.length > 0) {
-                    await importTelemetryBackup(e.target.files[0]);
-                    alert("Telemetry vector injection complete.");
-                }
-            });
+// Centralized change event listener for file import
+document.addEventListener('change', async (e) => {
+    if (e.target.id === 'import-data' && e.target.files?.length > 0) {
+        try {
+            await importTelemetryBackup(e.target.files[0]);
+            alert("Telemetry vector injection complete.");
+            
+            // Re-render table if on logger page
+            const page = document.body.dataset.page;
+            if (page === 'nav-logger' || page === 'logger') {
+                renderLoggerTable();
+            }
+        } catch (err) {
+            alert("Corruption detected: " + err.message);
         }
     }
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    initializeState();
+    
+    const page = document.body.dataset.page;
+
+    // Run dashboard logic if on dashboard
+    if (page === 'dashboard') {
+        updateDashboardCards();
+    }
+
+    // Run logger table rendering if on logger
+    if (page === 'nav-logger' || page === 'logger') {
+        renderLoggerTable();
+    }
+});
+
 function renderLoggerTable() {
-    const tbody = document.querySelector('.logger-table-body');
+    const tbody = document.getElementById('logger-table-body');
     if (!tbody) return;
     
     const data = getTelemetry();
-    tbody.innerHTML = '';
-    
-    data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
+    tbody.innerHTML = data.map(item => `
+        <tr>
             <td style="padding: 10px;">${item.date}</td>
             <td style="padding: 10px;">${item.ph}</td>
             <td style="padding: 10px;">${item.ec}</td>
             <td style="padding: 10px;">
-                <button class="delete-btn-container" data-id="${item.id}">
-                    <svg class="bin-icon" viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M3 6h18v2H3V6zm2 3h14l-1 13H6L5 9zm3 0h2v10H8V9zm4 0h2v10h-2V9zM7 3h10v2H7V3z"/></svg>
-                    Delete
-                </button>
+                <button class="delete-btn-container" data-action="delete-record" data-id="${item.id}">Delete</button>
             </td>
-        `;
-        tbody.appendChild(row);
-    });
-
-    document.querySelectorAll('.delete-btn-container').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = e.currentTarget.dataset.id;
-            removeRecord(id);
-            renderLoggerTable();
-        });
-    });
-}
-
-export function setupThemeToggle() {
-    const toggleBtn = document.getElementById('theme-toggle');
-    if (!toggleBtn) return;
-
-    toggleBtn.addEventListener('click', () => {
-        const currentTheme = document.body.dataset.theme === 'dark' ? 'light' : 'dark';
-        document.body.dataset.theme = currentTheme;
-        localStorage.setItem('theme', currentTheme);
-    });
+        </tr>
+    `).join('');
 }

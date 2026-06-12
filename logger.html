@@ -27,7 +27,7 @@
 
         <div class="main-content">
             <header>
-                <button id="toggle-sidebar">☰</button>
+                <button data-action="toggle-sidebar" id="toggle-sidebar">☰</button>
                 <h2 id="page-title">Logger</h2>
                 <div class="user-menu" id="user-menu">
                     <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
@@ -38,7 +38,7 @@
             </header>
             <main id="view-port">
                 <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                    <a href="add.html" id="add-data-link" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                    <a href="add.html" data-action="add-record" id="add-data-link" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
                         + add new data
                     </a>
                 </div>
