@@ -225,7 +225,8 @@ function renderLoggerTable() {
             <td style="padding: 10px;">${item.dissolvedOxygen}</td>
             <td style="padding: 10px;">${item.lux}</td>
             <td style="padding: 10px;">
-                <button class="delete-btn-container" data-id="${item.id}">
+                <!-- Fixed: Added data-action and moved the id here for the global listener -->
+                <button data-action="delete-record" data-id="${item.id}">
                     Delete
                 </button>
             </td>
@@ -233,7 +234,6 @@ function renderLoggerTable() {
         tbody.appendChild(row);
     });
 }
-
 let telemetryChart = null;
 
 function renderTelemetryChart() {
