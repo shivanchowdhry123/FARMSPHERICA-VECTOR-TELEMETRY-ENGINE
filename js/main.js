@@ -152,6 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addRecord(record);
         window.location.href = 'logger.html';
     }
+
     const ingestForm = document.getElementById('ingest-form');
     if (ingestForm) {
         ingestForm.addEventListener('submit', (e) => {
@@ -189,16 +190,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Data Persistence Sync (Visual timestamp for the Dashboard)
     const lastUpdatedEl = document.getElementById('last-updated');
-    if (lastUpdatedEl) {
+
+    if (document.body.dataset.page === 'dashboard') {
         const data = getTelemetry();
-        lastUpdatedEl.textContent = data.length > 0 ? new Date().toLocaleString() : "No data logged";
+        if (data.length > 0) {
+            const latest = data[data.length - 1];
+            document.getElementById('air-temp-display').textContent = `${latest.airTemp}°C`;
+            document.getElementById('res-temp-display').textContent = `${latest.resTemp}°C`;
+            document.getElementById('do-display').textContent = `${latest.dissolvedOxygen} mg/L`;
+            document.getElementById('lux-display').textContent = `${latest.lux} lx`;
+        }
     }
 
-    if (document.body.dataset.page === 'nav-logger') renderLoggerTable();
+    if (document.body.dataset.page === 'nav-logger') {
+        renderLoggerTable();
+    }
 });
 
 function renderLoggerTable() {
-const tbody = document.querySelector('tbody');
+    const tbody = document.querySelector('tbody');
     const data = getTelemetry();
     if (!tbody) return;
     
@@ -287,5 +297,13 @@ function renderTelemetryChart() {
                 y: { display: true, title: { display: true, text: 'Value' } }
             }
         }
+    });
+
+    document.querySelectorAll('.delete-btn-container').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.dataset.id;
+            removeRecord(id);
+            renderLoggerTable();
+        });
     });
 }
