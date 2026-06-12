@@ -697,6 +697,10 @@ button[data-action="delete-account"]:hover {
 }
 .cancel-link:hover { color: var(--danger); }
 
+button {
+    padding: 10px 20px;
+}
+
 /* "System operational" footer */
 .status-footer {
     font-size: 0.75rem;
