@@ -33,18 +33,15 @@ body {
     width: 100vw;
 }
 
-/* When sidebar is collapsed (desktop) */
 .app-container.sidebar-collapsed {
-    grid-template-columns: 0 1fr;
+    grid-template-columns: 0 1fr !important; /* hide sidebar column, keep content column */
 }
 .app-container.sidebar-collapsed aside {
     display: none !important;
 }
 .app-container.sidebar-collapsed .main-content {
-    grid-column: 1 / -1;
+    grid-column: 1 / -1 !important; /* make main content span full width */
 }
-
-/* Add rule to target .app-container.sidebar-collapsed .main-content */
 
 
 
