@@ -99,6 +99,9 @@ document.addEventListener('click', (e) => {
             alert("Connecting to Farmspherica support systems... (mocked)");
             break;
 
+        case 'submit-add':
+            break;
+
         default:
             console.warn(`Unhandled data-action: ${action}`);
     }
@@ -131,6 +134,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (page === 'nav-logger' || page === 'logger') {
         renderLoggerTable();
+    }
+    if (e.target.id === 'add-form') {
+        e.preventDefault();
+        
+        const record = {
+            id: crypto.randomUUID(),
+            date: new Date().toISOString().split('T')[0],
+            ph: parseFloat(document.getElementById('ph').value),
+            ec: parseFloat(document.getElementById('ec').value),
+            airTemp: parseFloat(document.getElementById('airTemp').value),
+            resTemp: parseFloat(document.getElementById('resTemp').value),
+            dissolvedOxygen: parseFloat(document.getElementById('dissolvedOxygen').value),
+            lux: parseInt(document.getElementById('lux').value)
+        };
+
+        addRecord(record);
+        window.location.href = 'logger.html';
     }
 });
 
