@@ -226,7 +226,7 @@ function renderLoggerTable() {
             <td style="padding: 10px;">${item.lux}</td>
             <td style="padding: 10px;">
                 <!-- Fixed: Added data-action and moved the id here for the global listener -->
-                <button data-action="delete-record" data-id="${item.id}">
+                <button class="delete-btn-container" data-action="delete-record" data-id="${item.id}">
                     Delete
                 </button>
             </td>
