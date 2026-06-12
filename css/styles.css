@@ -33,19 +33,15 @@ body {
     width: 100vw;
 }
 
-/* When sidebar is collapsed */
- .app-container.sidebar-collapsed {
+/* When sidebar is collapsed (desktop) */
+.app-container.sidebar-collapsed {
     grid-template-columns: 0 1fr;
 }
-
- /* Ensure main content occupies second column when sidebar collapsed */
- .app-container.sidebar-collapsed .main-content {
-    grid-column: 2;
-}
-
- /* Hide the sidebar completely */
 .app-container.sidebar-collapsed aside {
     display: none !important;
+}
+.app-container.sidebar-collapsed .main-content {
+    grid-column: 1 / -1;
 }
 
 /* Add rule to target .app-container.sidebar-collapsed .main-content */
