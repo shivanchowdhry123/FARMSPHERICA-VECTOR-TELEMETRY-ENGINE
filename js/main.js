@@ -45,9 +45,12 @@ document.addEventListener('click', (e) => {
 
         case 'toggle-sidebar':
             const appContainer = document.querySelector('.app-container');
-            // Responsive CSS moved to styles.css (removed stray block)
             if (appContainer) {
-                appContainer.classList.toggle('sidebar-collapsed');
+                if (window.innerWidth <= 768) {
+                    appContainer.classList.toggle('show-sidebar');
+                } else {
+                    appContainer.classList.toggle('sidebar-collapsed');
+                }
             }
             break;
 
@@ -77,23 +80,23 @@ document.addEventListener('click', (e) => {
             break;
 
         case 'sync-data':
-            alert("Synchronizing telemetry vectors to cloud database...");
+            alert("Synchronizing telemetry vectors to cloud database... (mocked)");
             break;
 
         case 'change-password':
-            alert("Password change form loaded.");
+            alert("Password change form loaded. (mocked)");
             break;
 
         case 'save-settings':
-            alert("Configuration settings updated successfully.");
+            alert("Configuration settings updated successfully. (mocked)");
             break;
 
         case 'delete-account':
-            alert("Warning: Account deletion process initialized.");
+            alert("Warning: Account deletion process initialized. (mocked)");
             break;
 
         case 'get-help':
-            alert("Connecting to Farmspherica support systems...");
+            alert("Connecting to Farmspherica support systems... (mocked)");
             break;
 
         default:

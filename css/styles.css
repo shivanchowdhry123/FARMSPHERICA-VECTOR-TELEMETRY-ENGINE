@@ -243,9 +243,15 @@ body { background-color: var(--bg-main); color: var(--text-primary); transition:
 }
 
 @media (max-width: 768px) {
-  .app-container {
-    grid-template-columns: 1fr;
-  }
+    .app-container {
+        grid-template-columns: 0 1fr;
+    }
+    .app-container.show-sidebar {
+        grid-template-columns: 260px 1fr;
+    }
+    .app-container.show-sidebar aside {
+        display: flex !important;
+    }
 }
 
 /* Ensure tables are scrollable on small screens */
