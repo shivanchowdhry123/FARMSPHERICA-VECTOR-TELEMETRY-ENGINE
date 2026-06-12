@@ -6,20 +6,23 @@
     --text-data: #111827;    
     --border: #e5e7eb;       
     --accent: #3b82f6;       
+    --success: #10b981;
     --shadow: 0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06);
     --shadow-hover: 0 4px 6px -1px rgba(0,0,0,0.2);
     --transition-speed: 0.3s;
     --easing: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body { 
-    font-family: 'Inter', system-ui, sans-serif; 
+    font-family: 'Inter', system-ui, sans-serif;
     height: 100vh; 
     overflow: hidden; 
     background-color: var(--bg-main); 
     color: var(--text-primary);
+    transition: background var(--transition-speed); 
 }
 
 .app-container { display: grid; grid-template-columns: 260px 1fr; height: 100vh; }
@@ -90,20 +93,30 @@ header h2 { font-family: 'Georgia', serif; font-size: 2.25rem; font-weight: norm
 .dashboard-grid { 
     display: grid; 
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    gap: 2rem; 
+    gap: 1.5rem; 
+    padding: 2rem;
     max-width: 1200px;
 }
 .card { 
-    background: #ffffff; 
-    border-radius: 8px; 
-    padding: 2rem; 
-    box-shadow: var(--shadow); 
+    background: var(--card-bg); 
+    border-radius: 12px; 
+    padding: 1.5rem; 
     border: 1px solid var(--border);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* The requested Green Glow */
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+    transition: all 0.3s ease;
 }
 .card h3 { font-size: 0.7rem; color: #6b7280; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.75rem; }
 .card p { font-size: 2rem; font-weight: 800; color: var(--text-data); }
+
+.card:hover {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.3);
+    border-color: rgba(16, 185, 129, 0.4);
+}
 
 .analytics-placeholder {
     height: 300px;
@@ -139,3 +152,39 @@ header h2 { font-family: 'Georgia', serif; font-size: 2.25rem; font-weight: norm
 }
 tr:hover .delete-btn-container { display: inline-flex; }
 .bin-icon { width: 16px; height: 16px; fill: currentColor; }
+/* Default Light Theme */
+body[data-theme='light'] {
+    --bg-main: #fcfbf9;
+    --side-panel: #1a1c1e;
+    --text-primary: #2e4f3c;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+}
+
+/* Dark Theme (The "Cyber-Agricultural" look you wanted) */
+body[data-theme='dark'] {
+    --bg-main: #030712;
+    --side-panel: #0a0e17;
+    --text-primary: #f8fafc;
+    --text-data: #ffffff;
+    --card-bg: rgba(17, 24, 39, 0.7);
+    --border: #1e293b;
+}
+
+
+/* Apply these dynamically */
+body { background-color: var(--bg-main); color: var(--text-primary); transition: background 0.3s; }
+.card { background: var(--card-bg); border: 1px solid var(--border); }
+
+:-ms-fullscreen
+
+/* FARMSPHERICA VECTOR TELEMETRY ENGINE - POLISHED UI 3.9 */
+
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+
+
+
+
+
