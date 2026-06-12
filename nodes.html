@@ -36,15 +36,80 @@
                 </div>
             </header>
             <main id="view-port">
+                <style>
+                    .node-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; }
+                    .node-card {
+                        border: 1px solid var(--border);
+                        border-radius: 12px;
+                        padding: 1.5rem;
+                        cursor: pointer;
+                        user-select: none;
+                        transition: all 0.25s ease;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.5rem;
+                    }
+                    .node-card:hover { transform: translateY(-2px); }
+                    .node-name { font-weight: 600; font-size: 1.05rem; }
+                    .node-status { font-size: 0.8rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+
+                    /* Active state */
+                    .node-card[data-status="active"] {
+                        border-color: rgba(16, 185, 129, 0.4);
+                        box-shadow: 0 0 15px rgba(16, 185, 129, 0.12);
+                    }
+                    .node-card[data-status="active"] .node-status { color: #10b981; }
+                    .node-card[data-status="active"]::before {
+                        content: '●';
+                        color: #10b981;
+                        font-size: 0.6rem;
+                        align-self: flex-end;
+                    }
+
+                    /* Standby state */
+                    .node-card[data-status="standby"] {
+                        border-color: rgba(245, 158, 11, 0.4);
+                        box-shadow: 0 0 15px rgba(245, 158, 11, 0.1);
+                    }
+                    .node-card[data-status="standby"] .node-status { color: #f59e0b; }
+                    .node-card[data-status="standby"]::before {
+                        content: '●';
+                        color: #f59e0b;
+                        font-size: 0.6rem;
+                        align-self: flex-end;
+                    }
+                </style>
+
                 <section>
-                    <div class="grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
-                        <div style="border: 0.5px solid var(--border); padding: 20px;">Node Alpha: Active</div>
-                        <div style="border: 0.5px solid var(--border); padding: 20px;">Node Beta: Active</div>
-                        <div style="border: 0.5px solid var(--border); padding: 20px;">Node Gamma: Standby</div>
-                        <div style="border: 0.5px solid var(--border); padding: 20px;">Node Delta: Active</div>
+                    <div class="node-grid">
+                        <div class="node-card" data-node="Alpha" data-status="active" onclick="toggleNode(this)">
+                            <span class="node-name">Node Alpha</span>
+                            <span class="node-status">Active</span>
+                        </div>
+                        <div class="node-card" data-node="Beta" data-status="active" onclick="toggleNode(this)">
+                            <span class="node-name">Node Beta</span>
+                            <span class="node-status">Active</span>
+                        </div>
+                        <div class="node-card" data-node="Gamma" data-status="standby" onclick="toggleNode(this)">
+                            <span class="node-name">Node Gamma</span>
+                            <span class="node-status">Standby</span>
+                        </div>
+                        <div class="node-card" data-node="Delta" data-status="active" onclick="toggleNode(this)">
+                            <span class="node-name">Node Delta</span>
+                            <span class="node-status">Active</span>
+                        </div>
                     </div>
                 </section>
-                <p>System operational.</p>
+                <p style="margin-top:1rem; font-size:0.85rem; color: var(--sub, #94a3b8);">Click a node to toggle between Active and Standby.</p>
+
+                <script>
+                    function toggleNode(card) {
+                        const current = card.dataset.status;
+                        const next = current === 'active' ? 'standby' : 'active';
+                        card.dataset.status = next;
+                        card.querySelector('.node-status').textContent = next === 'active' ? 'Active' : 'Standby';
+                    }
+                </script>
             </main>
         </div>
     </div>
