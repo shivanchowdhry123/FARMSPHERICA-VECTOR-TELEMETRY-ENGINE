@@ -776,3 +776,20 @@ button {
         -webkit-overflow-scrolling: touch;
     }
 }
+
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+@media (max-width: 768px) {
+    .app-container.show-sidebar .sidebar-overlay {
+        display: block;
+    }
+}
