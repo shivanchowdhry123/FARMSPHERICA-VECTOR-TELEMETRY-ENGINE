@@ -22,15 +22,6 @@ const applySavedTheme = () => {
     document.body.dataset.theme = savedTheme;
 };
 // Run theme initialization immediately if body is ready, or on DOMContentLoaded
-@media (max-width: 768px) {
-  .app-container {
-    grid-template-columns: 1fr;
-  }
-  /* Hide sidebar only when collapsed */
-  .app-container.sidebar-collapsed aside {
-    display: none !important;
-  }
-}
 if (document.body) {
     applySavedTheme();
 } else {
