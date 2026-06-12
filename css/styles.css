@@ -19,7 +19,7 @@ body[data-theme='light'] {
     --bg-main: #f0f4f8;
     --bg-surface: rgba(255,255,255,0.85);
     --bg-surface-solid: #ffffff;
-    --side-panel: #0f172a;
+    --side-panel: #e8e8e8;
     --side-panel-hover: rgba(255,255,255,0.06);
     --text-primary: #1e293b;
     --text-secondary: #64748b;
