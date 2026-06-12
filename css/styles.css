@@ -183,7 +183,6 @@ body[data-page="nodes"] .nav-nodes,
 body[data-page="settings"] .nav-settings {
     background: rgba(59,130,246,0.08);
     border-left: 3px solid var(--accent);
-    color: #ffffff !important;
     font-weight: 600;
 }
 
