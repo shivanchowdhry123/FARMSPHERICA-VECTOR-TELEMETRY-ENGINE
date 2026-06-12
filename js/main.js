@@ -236,13 +236,17 @@ function renderLoggerTable() {
             <td style="padding: 10px;">${item.dissolvedOxygen}</td>
             <td style="padding: 10px;">${item.lux}</td>
             <td style="padding: 10px;">
-                <!-- Fixed: Added data-action and moved the id here for the global listener -->
-                <button class="delete-btn-container" data-action="delete-record" data-id="${item.id}">
-                    Delete
-                </button>
+                <button class="delete-btn-container" data-id="${item.id}">Delete</button>
             </td>
         `;
         tbody.appendChild(row);
+    });
+
+    document.querySelectorAll('.delete-btn-container').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            removeRecord(e.currentTarget.dataset.id);
+            renderLoggerTable();
+        });
     });
 }
 let telemetryChart = null;
