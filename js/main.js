@@ -152,6 +152,46 @@ document.addEventListener('DOMContentLoaded', () => {
         addRecord(record);
         window.location.href = 'logger.html';
     }
+    const ingestForm = document.getElementById('ingest-form');
+    if (ingestForm) {
+        ingestForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const record = {
+                id: crypto.randomUUID(),
+                date: new Date().toISOString().split('T')[0],
+                ph: parseFloat(document.getElementById('ph').value),
+                ec: parseFloat(document.getElementById('ec').value),
+                airTemp: parseFloat(document.getElementById('airTemp').value),
+                resTemp: parseFloat(document.getElementById('resTemp').value),
+                dissolvedOxygen: parseFloat(document.getElementById('dissolvedOxygen').value),
+                lux: parseInt(document.getElementById('lux').value)
+            };
+
+            // Biosecurity Alarm Logic: Threshold Validation
+            const alarms = [];
+            if (record.ph < 5.5 || record.ph > 6.5) alarms.push("pH out of bounds");
+            if (record.ec < 1.2 || record.ec > 2.0) alarms.push("EC out of equilibrium");
+            if (record.airTemp < 20 || record.airTemp > 26) alarms.push("Air Temp instability");
+
+            if (alarms.length > 0) {
+                console.warn("BIOSECURITY ALARM:", alarms.join(', '));
+                alert("Vector Warning: " + alarms.join('. '));
+            }
+
+            addRecord(record);
+            window.location.href = 'logger.html';
+        });
+    }
+
+    // Data Persistence Sync (Visual timestamp for the Dashboard)
+    const lastUpdatedEl = document.getElementById('last-updated');
+    if (lastUpdatedEl) {
+        const data = getTelemetry();
+        lastUpdatedEl.textContent = data.length > 0 ? new Date().toLocaleString() : "No data logged";
+    }
+
+    if (document.body.dataset.page === 'nav-logger') renderLoggerTable();
 });
 
 function renderLoggerTable() {
