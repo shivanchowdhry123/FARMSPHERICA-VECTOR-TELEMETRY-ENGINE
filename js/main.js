@@ -59,6 +59,8 @@ document.addEventListener('click', (e) => {
                 ph: 7.0, temp: 22.0, ec: 1.5 
             });
             renderLoggerTable();
+            // Update dashboard cards in case the new data affects them
+            updateDashboardCards();
             break;
 
         case 'delete-record':
