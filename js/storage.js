@@ -26,7 +26,11 @@ export function saveTelemetry(data) {
  */
 export function initializeState() {
     if (!localStorage.getItem(LOCAL_STORAGE_KEY)) {
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([]));
+        const initialData = [
+            { id: '1', date: '2026-06-11 08:00', ph: 6.4, ec: 1.8, status: 'Buffer High' },
+            { id: '2', date: '2026-06-11 09:00', ph: 6.2, ec: 1.5, status: 'Stable' }
+        ];
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(initialData));
     }
 }
 

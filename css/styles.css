@@ -16,18 +16,43 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-body { 
+body {
     font-family: 'Inter', system-ui, sans-serif;
-    height: 100vh; 
-    overflow: hidden; 
-    background-color: var(--bg-main); 
+    height: 100vh;
+    overflow: auto; /* allow scrolling when content expands */
+    background-color: var(--bg-main);
     color: var(--text-primary);
-    transition: background var(--transition-speed); 
+    transition: background var(--transition-speed);
 }
 
-.app-container { display: grid; grid-template-columns: 260px 1fr; height: 100vh; transition: grid-template-columns var(--transition-speed) var(--easing); }
-.app-container.sidebar-collapsed { grid-template-columns: 0px 1fr; }
-.app-container.sidebar-collapsed aside { display: none !important; }
+.app-container {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    height: 100vh;
+    transition: grid-template-columns var(--transition-speed) var(--easing);
+    width: 100vw;
+}
+
+/* When sidebar is collapsed */
+ .app-container.sidebar-collapsed {
+    grid-template-columns: 0 1fr;
+}
+
+ /* Ensure main content occupies second column when sidebar collapsed */
+ .app-container.sidebar-collapsed .main-content {
+    grid-column: 2;
+}
+
+ /* Hide the sidebar completely */
+.app-container.sidebar-collapsed aside {
+    display: none !important;
+}
+
+/* Add rule to target .app-container.sidebar-collapsed .main-content */
+
+
+
+
 
 /* Sidebar */
 aside { 
@@ -87,6 +112,7 @@ body[data-page="settings"] .nav-settings {
     overflow-y: auto; 
     padding: 3rem;
     gap: 2rem;
+    width: 100%;
 }
 
 header { display: flex; justify-content: space-between; align-items: center; }
