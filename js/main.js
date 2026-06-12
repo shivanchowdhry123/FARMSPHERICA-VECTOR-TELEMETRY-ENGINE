@@ -22,6 +22,15 @@ const applySavedTheme = () => {
     document.body.dataset.theme = savedTheme;
 };
 // Run theme initialization immediately if body is ready, or on DOMContentLoaded
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+  /* Hide sidebar only when collapsed */
+  .app-container.sidebar-collapsed aside {
+    display: none !important;
+  }
+}
 if (document.body) {
     applySavedTheme();
 } else {
@@ -144,6 +153,7 @@ function renderLoggerTable() {
             <td style="padding: 10px;">${item.date}</td>
             <td style="padding: 10px;">${item.ph}</td>
             <td style="padding: 10px;">${item.ec}</td>
+            <td style="padding: 10px;">${item.temp}</td>
             <td style="padding: 10px;">
                 <button class="delete-btn-container" data-action="delete-record" data-id="${item.id}">Delete</button>
             </td>

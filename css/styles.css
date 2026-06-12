@@ -246,28 +246,6 @@ body { background-color: var(--bg-main); color: var(--text-primary); transition:
   .app-container {
     grid-template-columns: 1fr;
   }
-  aside {
-    display: none !important;
-  }
-  .main-content {
-    padding: 1.5rem;
-  }
-  .dashboard-grid {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-  header h2 {
-    font-size: 1.5rem;
-  }
-  .card p {
-    font-size: 1.5rem;
-  }
-  table {
-    font-size: 0.85rem;
-  }
-  .delete-btn-container {
-    font-size: 0.75rem;
-  }
 }
 
 /* Ensure tables are scrollable on small screens */
@@ -278,4 +256,4 @@ body { background-color: var(--bg-main); color: var(--text-primary); transition:
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-}
+} 
