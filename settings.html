@@ -39,11 +39,9 @@
                 <section style="max-width: 600px;">
                     <div style="margin-bottom: 30px;">
                         <h3>System Theme</h3>
-                        <select style="width: 100%; padding: 10px; margin-top: 10px;">
-                            <option>Eco-Minimalist (Default)</option>
-                            <option>High-Contrast Dark</option>
-                            <option>Monochrome</option>
-                        </select>
+                        <button id="theme-toggle" style="background: var(--accent); color: white; padding: 10px 20px; border: none; cursor: pointer;">
+                            Toggle Light/Dark Mode
+                        </button>
                     </div>
 
                     <div style="margin-bottom: 30px;">
@@ -58,7 +56,8 @@
 
                     <div style="margin-bottom: 30px;">
                         <h3>Data Sync</h3>
-                        <button style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Initialize Cloud Sync</button>
+                        <button id="export-data" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Export Telemetry Data</button>
+                        <input type="file" id="import-data" accept=".json" style="margin-left: 10px;">Initialize Cloud Sync
                     </div>
 
                     <div style="margin-bottom: 30px;">
