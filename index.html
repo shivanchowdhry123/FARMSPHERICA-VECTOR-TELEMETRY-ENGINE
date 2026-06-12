@@ -39,7 +39,8 @@
                 </div>
             </header>
             <main id="view-port">
-            <div class="dashboard-grid">
+            <h2>Facility Vitality Overview</h2>
+            <div class="grid-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
                 <div class="card">
                     <h3>Hydroponic Yield</h3>
                     <p id="card-ph">84.2%</p>
@@ -85,6 +86,22 @@
                     <p>7.2 mg/L</p>
                     <small>Target: > 6.0 mg/L</small>
                 </div>
+                <div class="card">
+                    <h3>Air Quality</h3>
+                    <div id="air-temp-display" class="telemetry-value">--°C</div>
+                </div>
+                <div class="card">
+                    <h3>Reservoir</h3>
+                    <div id="res-temp-display" class="telemetry-value">--°C</div>
+                </div>
+                <div class="card">
+                    <h3>Oxygenation</h3>
+                    <div id="do-display" class="telemetry-value">-- mg/L</div>
+                </div>
+                <div class="card">
+                    <h3>Luminosity</h3>
+                    <div id="lux-display" class="telemetry-value">-- lx</div>
+                </div>
             </div>
             <h2>Vector Telemetry Trends</h2>
             <div class="chart-container" style="position:relative; height:300px; margin-top:20px;">
@@ -116,26 +133,6 @@
                         <span style="color: #2563eb;">INFO</span>
                     </div>
                 </div>
-            </div>
-            <h2>Facility Vitality Overview</h2>
-            <div class="grid-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                    <!-- Existing Cards -->
-                    <div class="card">
-                        <h3>Air Quality</h3>
-                        <div id="air-temp-display" class="telemetry-value">--°C</div>
-                    </div>
-                    <div class="card">
-                        <h3>Reservoir</h3>
-                        <div id="res-temp-display" class="telemetry-value">--°C</div>
-                    </div>
-                    <div class="card">
-                        <h3>Oxygenation</h3>
-                        <div id="do-display" class="telemetry-value">-- mg/L</div>
-                    </div>
-                    <div class="card">
-                        <h3>Luminosity</h3>
-                        <div id="lux-display" class="telemetry-value">-- lx</div>
-                    </div>
             </div>
                 <p>System operational.</p>
             </main>
