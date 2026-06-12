@@ -205,6 +205,17 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.body.dataset.page === 'nav-logger') {
         renderLoggerTable();
     }
+
+    if (document.body.dataset.page === 'dashboard') {
+    const data = getTelemetry();
+    if (data.length > 0) {
+        const latest = data[data.length - 1];
+        document.getElementById('air-temp-display').textContent = `${latest.airTemp}°C`;
+        document.getElementById('res-temp-display').textContent = `${latest.resTemp}°C`;
+        document.getElementById('do-display').textContent = `${latest.dissolvedOxygen} mg/L`;
+        document.getElementById('lux-display').textContent = `${latest.lux} lx`;
+    }
+}
 });
 
 function renderLoggerTable() {
