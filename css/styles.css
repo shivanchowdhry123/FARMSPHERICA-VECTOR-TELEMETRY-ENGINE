@@ -139,3 +139,25 @@ header h2 { font-family: 'Georgia', serif; font-size: 2.25rem; font-weight: norm
 }
 tr:hover .delete-btn-container { display: inline-flex; }
 .bin-icon { width: 16px; height: 16px; fill: currentColor; }
+
+/* Default Light Theme */
+body[data-theme='light'] {
+    --bg-main: #fcfbf9;
+    --side-panel: #1a1c1e;
+    --text-primary: #2e4f3c;
+    --card-bg: #ffffff;
+    --border: #e5e7eb;
+}
+
+/* Dark Theme (The "Cyber-Agricultural" look you wanted) */
+body[data-theme='dark'] {
+    --bg-main: #030712;
+    --side-panel: #0a0e17;
+    --text-primary: #f8fafc;
+    --card-bg: rgba(17, 24, 39, 0.7);
+    --border: #1e293b;
+}
+
+/* Apply these dynamically */
+body { background-color: var(--bg-main); color: var(--text-primary); transition: background 0.3s; }
+.card { background: var(--card-bg); border: 1px solid var(--border); }
