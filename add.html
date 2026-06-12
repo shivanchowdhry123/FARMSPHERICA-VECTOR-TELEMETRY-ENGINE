@@ -27,15 +27,27 @@
                 </div>
                 <div class="form-group">
                     <label for="ph">pH Level</label>
-                    <input type="number" step="0.01" id="ph" name="ph" required />
+                    <input type="number" step="0.01" id="ph" name="ph" min="0" max="14" required />
                 </div>
                 <div class="form-group">
                     <label for="ec">EC (mS)</label>
-                    <input type="number" step="0.01" id="ec" name="ec" required />
+                    <input type="number" step="0.01" id="ec" name="ec" min="0" max="5" required />
                 </div>
                 <div class="form-group">
-                    <label for="temp">Temperature (°C)</label>
-                    <input type="number" step="0.1" id="temp" name="temp" required />
+                    <label for="airTemp">Air Temperature (°C)</label>
+                    <input type="number" step="0.1" id="airTemp" name="airTemp" min="0" max="50" required />
+                </div>
+                <div class="form-group">
+                    <label for="resTemp">Reservoir Temperature (°C)</label>
+                    <input type="number" step="0.1" id="resTemp" name="resTemp" min="0" max="40" required />
+                </div>
+                <div class="form-group">
+                    <label for="dissolvedOxygen">Dissolved Oxygen (mg/L)</label>
+                    <input type="number" step="0.1" id="dissolvedOxygen" name="dissolvedOxygen" min="0" max="20" required />
+                </div>
+                <div class="form-group">
+                    <label for="lux">Lux Level</label>
+                    <input type="number" step="1" id="lux" name="lux" min="0" max="100000" required />
                 </div>
                 <div class="form-actions">
                     <button type="submit" data-action="submit-add">Add Record</button>

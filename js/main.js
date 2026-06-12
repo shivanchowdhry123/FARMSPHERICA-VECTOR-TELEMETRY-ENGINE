@@ -173,6 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
             if (record.ph < 5.5 || record.ph > 6.5) alarms.push("pH out of bounds");
             if (record.ec < 1.2 || record.ec > 2.0) alarms.push("EC out of equilibrium");
             if (record.airTemp < 20 || record.airTemp > 26) alarms.push("Air Temp instability");
+            if (record.resTemp < 18 || record.resTemp > 22) alarms.push("Reservoir Temp deviation");
+            if (record.dissolvedOxygen < 6.0) alarms.push("Low Oxygenation");
+            if (record.lux < 15000 || record.lux > 25000) alarms.push("Irradiance mismatch");
 
             if (alarms.length > 0) {
                 console.warn("BIOSECURITY ALARM:", alarms.join(', '));
