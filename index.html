@@ -27,15 +27,15 @@
 
         <div id="sidebar-overlay" class="sidebar-overlay" data-action="toggle-sidebar"></div>
         
-        <div class="main-content">
-            <header>
-                <button data-action="toggle-sidebar" id="toggle-sidebar">☰</button>
-                <h2 id="page-title">Dashboard</h2>
-                <div class="user-menu" id="user-menu">
-                    <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
-                    <div id="options-bar">
-                    <p><a href="settings.html" id="user-profile">Profile</a> | <a href="login.html" id="user-logout">Logout</a></p>
-                    </div>
+            <div class="main-content">
+                <header>
+                    <button data-action="toggle-sidebar" id="toggle-sidebar">☰</button>
+                    <h2 id="page-title">Dashboard</h2>
+                    <div class="user-menu" id="user-menu">
+                        <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
+                        <div id="options-bar">
+                        <p><a href="settings.html" id="user-profile">Profile</a> | <a href="login.html" id="user-logout">Logout</a></p>
+                        </div>
                 </div>
             </header>
             <main id="view-port">
@@ -86,15 +86,16 @@
                     <small>Target: > 6.0 mg/L</small>
                 </div>
             </div>
-                <h2>Vector Telemetry Trends</h2>
-<div class="chart-container" style="position:relative; height:300px; margin-top:20px;">
-    <canvas id="telemetry-chart"></canvas>
-</div>
+            <h2>Vector Telemetry Trends</h2>
+            <div class="chart-container" style="position:relative; height:300px; margin-top:20px;">
+                <canvas id="telemetry-chart"></canvas>
+            </div>
+            
 
             
             <!-- ERP Analytical Drilldown -->
             <div class="analytics-section">
-                <h3>Operational Efficiency Logs</h3>
+                <h2>Operational Efficiency Logs</h2>
                 <div class="analytics-placeholder" style="flex-direction: column; align-items: flex-start; padding: 20px;">
                     <div style="width: 100%; display: flex; justify-content: space-between; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 10px;">
                         <span><strong>TIMESTAMP</strong></span>
@@ -115,6 +116,26 @@
                         <span style="color: #2563eb;">INFO</span>
                     </div>
                 </div>
+            </div>
+            <h2>Facility Vitality Overview</h2>
+            <div class="grid-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <!-- Existing Cards -->
+                    <div class="card">
+                        <h3>Air Quality</h3>
+                        <div id="air-temp-display" class="telemetry-value">--°C</div>
+                    </div>
+                    <div class="card">
+                        <h3>Reservoir</h3>
+                        <div id="res-temp-display" class="telemetry-value">--°C</div>
+                    </div>
+                    <div class="card">
+                        <h3>Oxygenation</h3>
+                        <div id="do-display" class="telemetry-value">-- mg/L</div>
+                    </div>
+                    <div class="card">
+                        <h3>Luminosity</h3>
+                        <div id="lux-display" class="telemetry-value">-- lx</div>
+                    </div>
             </div>
                 <p>System operational.</p>
             </main>
