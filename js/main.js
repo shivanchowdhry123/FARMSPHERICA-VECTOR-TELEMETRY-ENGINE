@@ -19,6 +19,11 @@ export function updateDashboardCards() {
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeState();
+    
+    // Apply saved theme immediately on load
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.body.dataset.theme = savedTheme;
+    
     setupThemeToggle();
 
     // Logger page: Add button and Table rendering
