@@ -227,3 +227,55 @@ body[data-theme='dark'] {
 /* Apply these dynamically */
 body { background-color: var(--bg-main); color: var(--text-primary); transition: background 0.3s; }
 .card { background: var(--card-bg); border: 1px solid var(--border); }
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .app-container {
+    grid-template-columns: 200px 1fr;
+  }
+  aside {
+    padding: 2rem 0;
+  }
+  .dashboard-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+  aside {
+    display: none !important;
+  }
+  .main-content {
+    padding: 1.5rem;
+  }
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+  header h2 {
+    font-size: 1.5rem;
+  }
+  .card p {
+    font-size: 1.5rem;
+  }
+  table {
+    font-size: 0.85rem;
+  }
+  .delete-btn-container {
+    font-size: 0.75rem;
+  }
+}
+
+/* Ensure tables are scrollable on small screens */
+@media (max-width: 600px) {
+  .main-content table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
