@@ -198,21 +198,30 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function renderLoggerTable() {
-    const tbody = document.getElementById('logger-table-body');
+const tbody = document.querySelector('tbody');
+    const data = getTelemetry();
     if (!tbody) return;
     
-    const data = getTelemetry();
-    tbody.innerHTML = data.map(item => `
-        <tr>
+    tbody.innerHTML = '';
+    
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
             <td style="padding: 10px;">${item.date}</td>
             <td style="padding: 10px;">${item.ph}</td>
             <td style="padding: 10px;">${item.ec}</td>
-            <td style="padding: 10px;">${item.temp}</td>
+            <td style="padding: 10px;">${item.airTemp}°C</td>
+            <td style="padding: 10px;">${item.resTemp}°C</td>
+            <td style="padding: 10px;">${item.dissolvedOxygen}</td>
+            <td style="padding: 10px;">${item.lux}</td>
             <td style="padding: 10px;">
-                <button class="delete-btn-container" data-action="delete-record" data-id="${item.id}">Delete</button>
+                <button class="delete-btn-container" data-id="${item.id}">
+                    Delete
+                </button>
             </td>
-        </tr>
-    `).join('');
+        `;
+        tbody.appendChild(row);
+    });
 }
 
 let telemetryChart = null;
