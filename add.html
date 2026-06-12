@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmspherica | Add Data</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="add-data">
+    <div class="app-container" style="padding: 2rem;">
+        <div class="card" style="max-width: 500px; margin: 0 auto;">
+            <h2>Log Telemetry Vector</h2>
+            <a href="logger.html" id="add-data-link" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">
+                ← Back to Logger
+            </a>
+            <form id="ingest-form" style="margin-top: 20px;">
+                <input type="number" step="0.1" id="ph" placeholder="pH (5.5 - 6.5)" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <input type="number" step="0.1" id="ec" placeholder="EC (1.2 - 2.0 mS/cm)" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <input type="number" step="0.1" id="airTemp" placeholder="Air Temp (°C)" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <input type="number" step="0.1" id="resTemp" placeholder="Reservoir Temp (°C)" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <input type="number" step="0.1" id="dissolvedOxygen" placeholder="Dissolved Oxygen (mg/L)" required style="width: 100%; padding: 10px; margin-bottom: 10px;">
+                <input type="number" step="1" id="lux" placeholder="Lux Intensity" required style="width: 100%; padding: 10px; margin-bottom: 20px;">
+                <button type="submit" style="background: var(--success); color: white; padding: 10px 20px; border: none; cursor: pointer; width: 100%;">Commit Vector</button>
+            </form>
+        </div>
+    </div>
+    <script type="module">
+        import { addRecord } from './js/storage.js';
+        document.getElementById('ingest-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const record = {
+                id: crypto.randomUUID(),
+                date: new Date().toISOString().split('T')[0],
+                ph: parseFloat(document.getElementById('ph').value),
+                ec: parseFloat(document.getElementById('ec').value),
+                airTemp: parseFloat(document.getElementById('airTemp').value),
+                resTemp: parseFloat(document.getElementById('resTemp').value),
+                dissolvedOxygen: parseFloat(document.getElementById('dissolvedOxygen').value),
+                lux: parseInt(document.getElementById('lux').value)
+            };
+            addRecord(record);
+            window.location.href = 'logger.html';
+        });
+    </script>
+</body>
+</html>
