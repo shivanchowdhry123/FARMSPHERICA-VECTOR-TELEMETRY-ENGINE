@@ -1,6 +1,6 @@
 /**
  * Local Telemetry Storage Manager
- * Handles persistent browser-side data caching.
+ * Handles persistent browser-side data caching and backup/restore functionality.
  */
 
 const LOCAL_STORAGE_KEY = 'telemetry';
@@ -48,4 +48,40 @@ export function removeRecord(id) {
     let data = getTelemetry();
     data = data.filter(item => item.id !== id);
     saveTelemetry(data);
+}
+
+/**
+ * Generate a backup file of the current state.
+ */
+export function exportTelemetryBackup() {
+    const data = getTelemetry();
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `farmspherica_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    
+    URL.revokeObjectURL(url);
+}
+
+/**
+ * Process an imported backup file.
+ */
+export async function importTelemetryBackup(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const importedData = JSON.parse(e.target.result);
+                saveTelemetry(importedData);
+                resolve(importedData);
+            } catch (err) {
+                reject(new Error("Invalid backup file format."));
+            }
+        };
+        reader.onerror = () => reject(new Error("Failed to read file."));
+        reader.readAsText(file);
+    });
 }

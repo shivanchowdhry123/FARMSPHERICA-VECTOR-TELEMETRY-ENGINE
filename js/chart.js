@@ -1,37 +1,57 @@
-import { getTelemetry } from './storage.js';
+import { initializeState, getTelemetry, addRecord, removeRecord } from './storage.js';
 
-/**
- * Renders the telemetry trend chart on the analytics dashboard.
- * Requires <canvas id="telemetryChart"></canvas> in the DOM.
- */
-export function initializeChart() {
-    const canvas = document.getElementById('telemetryChart');
-    if (!canvas) return;
-
-    const data = getTelemetry();
-    if (data.length === 0) {
-        console.warn("No telemetry data to plot. The chart is effectively a void.");
-        return;
+document.addEventListener('DOMContentLoaded', () => {
+    initializeState();
+    
+    // Render table only if we are on the logger page
+    if (document.body.dataset.page === 'nav-logger') {
+        renderLoggerTable();
+        
+        // Add Record Event
+        document.getElementById('add-data-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            // Unified Schema as per firebase_studio_brief.md
+            const newData = { 
+                id: crypto.randomUUID(), 
+                date: new Date().toISOString().split('T')[0],
+                ph: 7.0, 
+                temp: 22.0,
+                ec: 1.5,
+                status: 'Manual Entry' 
+            };
+            addRecord(newData);
+            renderLoggerTable();
+        });
     }
+});
 
-    // Mapping telemetry records to chart data
-    const labels = data.map(item => item.date);
-    const phValues = data.map(item => item.ph);
-    const ecValues = data.map(item => item.ec);
+function renderLoggerTable() {
+    const tbody = document.querySelector('tbody');
+    const data = getTelemetry();
+    tbody.innerHTML = '';
+    
+    data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td style="padding: 10px;">${item.date}</td>
+            <td style="padding: 10px;">${item.ph}</td>
+            <td style="padding: 10px;">${item.ec}</td>
+            <td style="padding: 10px;">
+                <button class="delete-btn-container" data-id="${item.id}">
+                    <svg class="bin-icon" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6zm2 3h14l-1 13H6L5 9zm3 0h2v10H8V9zm4 0h2v10h-2V9zM7 3h10v2H7V3z"/></svg>
+                    Delete
+                </button>
+            </td>
+        `;
+        tbody.appendChild(row);
+    });
 
-    new Chart(canvas.getContext('2d'), {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                { label: 'pH Levels', data: phValues, borderColor: '#2e4f3c', fill: false },
-                { label: 'EC (mS/cm)', data: ecValues, borderColor: '#3b82f6', fill: false }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: { y: { beginAtZero: false } }
-        }
+    // Hook up delete buttons
+    document.querySelectorAll('.delete-btn-container').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.dataset.id;
+            removeRecord(id);
+            renderLoggerTable();
+        });
     });
 }

@@ -1,4 +1,21 @@
-import { initializeState, getTelemetry, saveTelemetry } from './storage.js';
+import { initializeState, getTelemetry, addRecord, removeRecord } from './storage.js';
+
+export function updateDashboardCards() {
+    const data = getTelemetry();
+    if (data.length === 0) return;
+
+    // Get the most recent entry
+    const latest = data[data.length - 1];
+
+    // Assuming you have elements with these IDs in index.html
+    const phEl = document.getElementById('card-ph');
+    const ecEl = document.getElementById('card-ec');
+    const tempEl = document.getElementById('card-temp');
+
+    if (phEl) phEl.textContent = latest.ph;
+    if (ecEl) ecEl.textContent = latest.ec;
+    if (tempEl) tempEl.textContent = latest.temp;
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeState();
@@ -10,10 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add Record Event
         document.getElementById('add-data-link').addEventListener('click', (e) => {
             e.preventDefault();
-            const newData = { id: Date.now(), timestamp: new Date().toLocaleString(), ph: '7.0', status: 'Manual Entry' };
-            const data = getTelemetry();
-            data.push(newData);
-            saveTelemetry(data);
+            const newData = { 
+                id: crypto.randomUUID(), 
+                timestamp: new Date().toLocaleString(), 
+                ph: '7.0', 
+                status: 'Manual Entry' 
+            };
+            addRecord(newData);
             renderLoggerTable();
         });
     }
@@ -40,13 +60,11 @@ function renderLoggerTable() {
         tbody.appendChild(row);
     });
 
-    // Hook up delete buttons
+    // Hook up delete buttons using the new removeRecord function
     document.querySelectorAll('.delete-btn-container').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            const id = parseInt(e.currentTarget.dataset.id);
-            let data = getTelemetry();
-            data = data.filter(item => item.id !== id);
-            saveTelemetry(data);
+            const id = e.currentTarget.dataset.id;
+            removeRecord(id);
             renderLoggerTable();
         });
     });
