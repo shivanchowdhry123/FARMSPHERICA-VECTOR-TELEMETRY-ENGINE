@@ -45,6 +45,7 @@ document.addEventListener('click', (e) => {
 
         case 'toggle-sidebar':
             const appContainer = document.querySelector('.app-container');
+            // Responsive CSS moved to styles.css (removed stray block)
             if (appContainer) {
                 appContainer.classList.toggle('sidebar-collapsed');
             }
