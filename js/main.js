@@ -121,15 +121,11 @@ document.addEventListener('change', async (e) => {
 
 document.addEventListener('DOMContentLoaded', () => {
     initializeState();
-    
     const page = document.body.dataset.page;
-
-    // Run dashboard logic if on dashboard
     if (page === 'dashboard') {
         updateDashboardCards();
+        renderTelemetryChart();
     }
-
-    // Run logger table rendering if on logger
     if (page === 'nav-logger' || page === 'logger') {
         renderLoggerTable();
     }
@@ -151,4 +147,70 @@ function renderLoggerTable() {
             </td>
         </tr>
     `).join('');
+}
+
+let telemetryChart = null;
+
+function renderTelemetryChart() {
+    const canvas = document.getElementById('telemetry-chart');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const data = getTelemetry();
+    if (!data || data.length === 0) {
+        // clear any existing chart
+        if (telemetryChart) {
+            telemetryChart.destroy();
+            telemetryChart = null;
+        }
+        return;
+    }
+    const labels = data.map(item => item.date);
+    const phData = data.map(item => item.ph);
+    const ecData = data.map(item => item.ec);
+    const tempData = data.map(item => item.temp);
+    if (telemetryChart) telemetryChart.destroy();
+    telemetryChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [
+                {
+                    label: 'pH',
+                    data: phData,
+                    borderColor: '#34D399',
+                    backgroundColor: 'rgba(52,211,153,0.1)',
+                    tension: 0.3,
+                    fill: true,
+                },
+                {
+                    label: 'EC',
+                    data: ecData,
+                    borderColor: '#60A5FA',
+                    backgroundColor: 'rgba(96,165,250,0.1)',
+                    tension: 0.3,
+                    fill: true,
+                },
+                {
+                    label: 'Temp (°C)',
+                    data: tempData,
+                    borderColor: '#F472B6',
+                    backgroundColor: 'rgba(244,114,182,0.1)',
+                    tension: 0.3,
+                    fill: true,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'top' },
+                tooltip: { mode: 'index', intersect: false }
+            },
+            scales: {
+                x: { display: true, title: { display: true, text: 'Date' } },
+                y: { display: true, title: { display: true, text: 'Value' } }
+            }
+        }
+    });
 }
