@@ -7,7 +7,14 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body data-page="add-data">
-    <div class="app-container" style="padding: 2rem;">
+    <!-- Apply saved theme immediately (dark is default) -->
+    <script>
+        (function(){
+            var t = localStorage.getItem('theme') || 'dark';
+            document.body.dataset.theme = t;
+        })();
+    </script>
+    <div style="display:flex; align-items:center; justify-content:center; min-height:100vh; background:var(--bg-main); padding:2rem;">
         <div class="card" style="max-width: 500px; margin: 0 auto;">
             <h2>Log Telemetry Vector</h2>
             <a href="logger.html" id="add-data-link" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">

@@ -18,7 +18,7 @@ export function updateDashboardCards() {
 
 // Apply saved theme state globally as early as possible
 const applySavedTheme = () => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem('theme') || 'dark';
     document.body.dataset.theme = savedTheme;
 };
 // Run theme initialization immediately if body is ready, or on DOMContentLoaded
