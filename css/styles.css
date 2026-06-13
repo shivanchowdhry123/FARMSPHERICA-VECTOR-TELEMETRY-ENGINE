@@ -149,6 +149,8 @@ aside {
     font-size: 1.1rem;
     letter-spacing: -0.3px;
     white-space: nowrap;
+    color: var(--text-primary);
+    transition: color var(--transition-speed) var(--easing);
 }
 
 #page-list { list-style: none; }
