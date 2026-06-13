@@ -255,6 +255,14 @@ document.addEventListener('click', (e) => {
             exportSelectedTelemetry();
             break;
 
+        case 'delete-selected':
+            deleteSelectedTelemetry();
+            break;
+
+        case 'toggle-selection-mode':
+            toggleSelectionMode();
+            break;
+
         case 'sync-data':
             alert("Synchronizing telemetry vectors to cloud database... (mocked)");
             break;
@@ -407,15 +415,41 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-export function updateExportButtonVisibility() {
-    const exportBtn = document.getElementById('export-selected-btn');
-    if (!exportBtn) return;
+export function updateBulkActionsVisibility() {
+    const bulkGroup = document.getElementById('bulk-actions-group');
+    if (!bulkGroup) return;
+    
+    const isSelectionActive = document.body.dataset.selectionMode === 'active';
     const checkedCount = document.querySelectorAll('.row-checkbox:checked').length;
-    if (checkedCount > 0) {
-        exportBtn.style.display = 'inline-flex';
+    
+    if (isSelectionActive && checkedCount > 0) {
+        bulkGroup.style.display = 'flex';
     } else {
-        exportBtn.style.display = 'none';
+        bulkGroup.style.display = 'none';
     }
+}
+
+export function toggleSelectionMode() {
+    const current = document.body.dataset.selectionMode || 'inactive';
+    const next = current === 'active' ? 'inactive' : 'active';
+    document.body.dataset.selectionMode = next;
+
+    const btn = document.getElementById('toggle-selection-btn');
+    if (btn) {
+        btn.textContent = next === 'active' ? 'Disable Bulk Selection' : 'Enable Bulk Selection';
+        btn.style.background = next === 'active' ? 'var(--accent)' : 'var(--input-bg)';
+        btn.style.color = next === 'active' ? 'white' : 'var(--text-primary)';
+    }
+
+    // Uncheck everything if disabled
+    if (next === 'inactive') {
+        const checkboxes = document.querySelectorAll('.row-checkbox');
+        checkboxes.forEach(cb => cb.checked = false);
+        const selectAll = document.getElementById('select-all');
+        if (selectAll) selectAll.checked = false;
+    }
+
+    updateBulkActionsVisibility();
 }
 
 export function exportSelectedTelemetry() {
@@ -437,6 +471,18 @@ export function exportSelectedTelemetry() {
     URL.revokeObjectURL(url);
 }
 
+export function deleteSelectedTelemetry() {
+    const checkedBoxes = document.querySelectorAll('.row-checkbox:checked');
+    if (checkedBoxes.length === 0) return;
+
+    if (!confirm(`Are you sure you want to delete ${checkedBoxes.length} selected telemetry records?`)) return;
+
+    const selectedIds = Array.from(checkedBoxes).map(cb => cb.dataset.id);
+    selectedIds.forEach(id => removeRecord(id));
+
+    renderLoggerTable();
+}
+
 function renderLoggerTable() {
     const tbody = document.querySelector('tbody');
     const data = getTelemetry();
@@ -452,7 +498,7 @@ function renderLoggerTable() {
     data.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
-            <td style="padding: 10px; text-align: center;">
+            <td class="checkbox-col" style="padding: 10px; text-align: center;">
                 <input type="checkbox" class="row-checkbox" data-id="${item.id}">
             </td>
             <td style="padding: 10px;">${item.date}</td>
@@ -476,15 +522,15 @@ function renderLoggerTable() {
         selectAllCheckbox.onchange = (e) => {
             const checkboxes = document.querySelectorAll('.row-checkbox');
             checkboxes.forEach(cb => cb.checked = e.target.checked);
-            updateExportButtonVisibility();
+            updateBulkActionsVisibility();
         };
     }
-    updateExportButtonVisibility();
+    updateBulkActionsVisibility();
 
     // Bind change listener to each row checkbox
     document.querySelectorAll('.row-checkbox').forEach(cb => {
         cb.onchange = () => {
-            updateExportButtonVisibility();
+            updateBulkActionsVisibility();
             if (selectAllCheckbox) {
                 const total = document.querySelectorAll('.row-checkbox').length;
                 const checked = document.querySelectorAll('.row-checkbox:checked').length;

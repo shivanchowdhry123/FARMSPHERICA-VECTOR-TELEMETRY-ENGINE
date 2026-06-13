@@ -848,3 +848,11 @@ button {
     margin: 0;
     padding: 0 5px;
 }
+
+/* Bulk Action Selection Column Display */
+.checkbox-col {
+    display: none !important;
+}
+body[data-selection-mode="active"] .checkbox-col {
+    display: table-cell !important;
+}

@@ -37,10 +37,20 @@
                 </div>
             </header>
             <main id="view-port">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <button data-action="export-selected" id="export-selected-btn" style="background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer; display: none;">
-                        Export Selected (.json)
-                    </button>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;">
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <button data-action="toggle-selection-mode" id="toggle-selection-btn" style="background: var(--input-bg); color: var(--text-primary); border: 1px solid var(--border); padding: 8px 16px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                            Enable Bulk Selection
+                        </button>
+                        <div id="bulk-actions-group" style="display: none; gap: 10px; align-items: center;">
+                            <button data-action="export-selected" id="export-selected-btn" style="background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                                Export Selected (.json)
+                            </button>
+                            <button data-action="delete-selected" id="delete-selected-btn" style="background: var(--danger); color: white; border: none; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                                Delete Selected
+                            </button>
+                        </div>
+                    </div>
                     <a href="add.html" id="add-data-link" class="action-link" style="margin-left: auto;">+ add new data</a>
                 </div>
 
@@ -48,7 +58,7 @@
                     <table id="logger-table" style="width: 100%; border-collapse: collapse; border: 0.5px solid var(--border);">
                         <thead>
                             <tr style="text-align: left; border-bottom: 0.5px solid var(--border);">
-                                <th style="padding: 10px; width: 40px;"><input type="checkbox" id="select-all"></th>
+                                <th class="checkbox-col" style="padding: 10px; width: 40px;"><input type="checkbox" id="select-all"></th>
                                 <th style="padding: 10px;">Timestamp</th>
                                 <th style="padding: 10px;">pH Level</th>
                                 <th style="padding: 10px;">EC</th>
