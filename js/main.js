@@ -128,36 +128,74 @@ document.addEventListener('change', async (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     initializeState();
     const page = document.body.dataset.page;
+
+    // --- Dashboard initialization ---
     if (page === 'dashboard') {
         updateDashboardCards();
         renderTelemetryChart();
+
+        // Populate extended telemetry display cards
+        const data = getTelemetry();
+        if (data.length > 0) {
+            const latest = data[data.length - 1];
+            const airTempEl = document.getElementById('air-temp-display');
+            const resTempEl = document.getElementById('res-temp-display');
+            const doEl = document.getElementById('do-display');
+            const luxEl = document.getElementById('lux-display');
+            if (airTempEl) airTempEl.textContent = `${latest.airTemp}°C`;
+            if (resTempEl) resTempEl.textContent = `${latest.resTemp}°C`;
+            if (doEl) doEl.textContent = `${latest.dissolvedOxygen} mg/L`;
+            if (luxEl) luxEl.textContent = `${latest.lux} lx`;
+        }
     }
+
+    // --- Logger page initialization ---
     if (page === 'nav-logger' || page === 'logger') {
         renderLoggerTable();
     }
-    if (e.target.id === 'add-form') {
-        e.preventDefault();
-        
-        const record = {
-            id: crypto.randomUUID(),
-            date: new Date().toISOString().split('T')[0],
-            ph: parseFloat(document.getElementById('ph').value),
-            ec: parseFloat(document.getElementById('ec').value),
-            airTemp: parseFloat(document.getElementById('airTemp').value),
-            resTemp: parseFloat(document.getElementById('resTemp').value),
-            dissolvedOxygen: parseFloat(document.getElementById('dissolvedOxygen').value),
-            lux: parseInt(document.getElementById('lux').value)
-        };
 
-        addRecord(record);
-        window.location.href = 'logger.html';
+    // --- Add-data form submission (add.html, form id="add-form") ---
+    const addForm = document.getElementById('add-form');
+    if (addForm) {
+        addForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const record = {
+                id: crypto.randomUUID(),
+                date: document.getElementById('date')?.value || new Date().toISOString().split('T')[0],
+                ph: parseFloat(document.getElementById('ph').value),
+                ec: parseFloat(document.getElementById('ec').value),
+                airTemp: parseFloat(document.getElementById('airTemp').value),
+                resTemp: parseFloat(document.getElementById('resTemp').value),
+                dissolvedOxygen: parseFloat(document.getElementById('dissolvedOxygen').value),
+                lux: parseInt(document.getElementById('lux').value)
+            };
+
+            // Biosecurity Alarm Logic: Threshold Validation
+            const alarms = [];
+            if (record.ph < 5.5 || record.ph > 6.5) alarms.push("pH out of bounds");
+            if (record.ec < 1.2 || record.ec > 2.0) alarms.push("EC out of equilibrium");
+            if (record.airTemp < 20 || record.airTemp > 26) alarms.push("Air Temp instability");
+            if (record.resTemp < 18 || record.resTemp > 22) alarms.push("Reservoir Temp deviation");
+            if (record.dissolvedOxygen < 6.0) alarms.push("Low Oxygenation");
+            if (record.lux < 15000 || record.lux > 25000) alarms.push("Irradiance mismatch");
+
+            if (alarms.length > 0) {
+                console.warn("BIOSECURITY ALARM:", alarms.join(', '));
+                alert("Vector Warning: " + alarms.join('. '));
+            }
+
+            addRecord(record);
+            window.location.href = 'logger.html';
+        });
     }
 
+    // --- Ingest form submission (if a separate ingest-form exists) ---
     const ingestForm = document.getElementById('ingest-form');
     if (ingestForm) {
         ingestForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const record = {
                 id: crypto.randomUUID(),
                 date: new Date().toISOString().split('T')[0],
@@ -187,44 +225,15 @@ document.addEventListener('DOMContentLoaded', () => {
             window.location.href = 'logger.html';
         });
     }
-
-    // Data Persistence Sync (Visual timestamp for the Dashboard)
-    const lastUpdatedEl = document.getElementById('last-updated');
-
-    if (document.body.dataset.page === 'dashboard') {
-        const data = getTelemetry();
-        if (data.length > 0) {
-            const latest = data[data.length - 1];
-            document.getElementById('air-temp-display').textContent = `${latest.airTemp}°C`;
-            document.getElementById('res-temp-display').textContent = `${latest.resTemp}°C`;
-            document.getElementById('do-display').textContent = `${latest.dissolvedOxygen} mg/L`;
-            document.getElementById('lux-display').textContent = `${latest.lux} lx`;
-        }
-    }
-
-    if (document.body.dataset.page === 'nav-logger') {
-        renderLoggerTable();
-    }
-
-    if (document.body.dataset.page === 'dashboard') {
-    const data = getTelemetry();
-    if (data.length > 0) {
-        const latest = data[data.length - 1];
-        document.getElementById('air-temp-display').textContent = `${latest.airTemp}°C`;
-        document.getElementById('res-temp-display').textContent = `${latest.resTemp}°C`;
-        document.getElementById('do-display').textContent = `${latest.dissolvedOxygen} mg/L`;
-        document.getElementById('lux-display').textContent = `${latest.lux} lx`;
-    }
-}
 });
 
 function renderLoggerTable() {
     const tbody = document.querySelector('tbody');
     const data = getTelemetry();
     if (!tbody) return;
-    
+
     tbody.innerHTML = '';
-    
+
     data.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
@@ -249,6 +258,7 @@ function renderLoggerTable() {
         });
     });
 }
+
 let telemetryChart = null;
 
 function renderTelemetryChart() {
@@ -312,13 +322,5 @@ function renderTelemetryChart() {
                 y: { display: true, title: { display: true, text: 'Value' } }
             }
         }
-    });
-
-    document.querySelectorAll('.delete-btn-container').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const id = e.currentTarget.dataset.id;
-            removeRecord(id);
-            renderLoggerTable();
-        });
     });
 }
