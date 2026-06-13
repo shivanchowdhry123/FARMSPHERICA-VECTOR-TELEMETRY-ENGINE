@@ -16,6 +16,7 @@
             <nav id="page-list">
                 <ul>
                     <li><a href="dashboard.html" class="nav-dashboard">Dashboard</a></li>
+                    <li><a href="analytics.html" class="nav-analytics">Analytics</a></li>
                     <li><a href="logger.html" class="nav-logger">Logger</a></li>
                     <li><a href="nodes.html" class="nav-nodes">Nodes</a></li>
                     <li><a href="settings.html" class="nav-settings">Settings</a></li>
@@ -36,14 +37,18 @@
                 </div>
             </header>
             <main id="view-port">
-                <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                    <a href="add.html" id="add-data-link" style="color: var(--accent); text-decoration: none; font-weight: 600; font-size: 0.9rem;">+ add new data</a>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <button data-action="export-selected" id="export-selected-btn" style="background: var(--accent); color: white; border: none; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 0.8rem; font-weight: 600; cursor: pointer; display: none;">
+                        Export Selected (.json)
+                    </button>
+                    <a href="add.html" id="add-data-link" class="action-link" style="margin-left: auto;">+ add new data</a>
                 </div>
 
                 <section>
-                    <table id="logger-table"style="width: 100%; border-collapse: collapse; border: 0.5px solid var(--border);">
+                    <table id="logger-table" style="width: 100%; border-collapse: collapse; border: 0.5px solid var(--border);">
                         <thead>
                             <tr style="text-align: left; border-bottom: 0.5px solid var(--border);">
+                                <th style="padding: 10px; width: 40px;"><input type="checkbox" id="select-all"></th>
                                 <th style="padding: 10px;">Timestamp</th>
                                 <th style="padding: 10px;">pH Level</th>
                                 <th style="padding: 10px;">EC</th>

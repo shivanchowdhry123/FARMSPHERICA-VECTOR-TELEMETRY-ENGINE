@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmspherica | Analytics</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-page="analytics">
+    <div class="app-container">
+        <aside id="sidebar">
+            <div class="logo-area">
+                <img src="images/logo.svg" alt="Logo" class="logo">
+                <span>Farmspherica</span>
+            </div>
+            <nav id="page-list">
+                <ul>
+                    <li><a href="dashboard.html" class="nav-dashboard">Dashboard</a></li>
+                    <li><a href="analytics.html" class="nav-analytics">Analytics</a></li>
+                    <li><a href="logger.html" class="nav-logger">Logger</a></li>
+                    <li><a href="nodes.html" class="nav-nodes">Nodes</a></li>
+                    <li><a href="settings.html" class="nav-settings">Settings</a></li>
+                </ul>
+            </nav>
+             <div class="platform-name">VECTOR ENGINE v1.0</div>
+        </aside>
+
+        <div id="sidebar-overlay" class="sidebar-overlay" data-action="toggle-sidebar"></div>
+        
+        <div class="main-content">
+            <header>
+                <button data-action="toggle-sidebar" id="toggle-sidebar">☰</button>
+                <h2 id="page-title">Vector Analytics Room</h2>
+                <div class="user-menu" id="user-menu">
+                    <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
+                    <div id="options-bar">
+                        <p><a href="settings.html" id="user-profile">Profile</a> | <a href="index.html" id="user-logout">Logout</a></p>
+                    </div>
+                </div>
+            </header>
+            <main id="view-port">
+                <div style="display: flex; gap: 1rem; align-items: center; justify-content: space-between; flex-wrap: wrap;">
+                    <h2>Bespoke Vector Visualization</h2>
+                    <div class="card" style="padding: 10px 20px; flex-direction: row; align-items: center; gap: 10px; border-color: var(--accent); min-width: 200px;">
+                        <div>
+                            <h3 style="font-size: 0.65rem; margin: 0; letter-spacing: 1px;">Facility Vitality Index</h3>
+                            <p id="analytics-fvi" style="font-size: 1.5rem; margin: 0; font-weight: 800; color: var(--accent);">--%</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card" style="height: 380px;">
+                        <h3>Multivariate Vector Radar</h3>
+                        <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative;">
+                            <canvas id="radar-canvas" style="width: 100%; height: 100%; max-height: 300px;"></canvas>
+                        </div>
+                        <small>Plots pH, EC, Air T, Res T, DO, and Lux against optimal comfort zone (green region)</small>
+                    </div>
+                    <div class="card" style="height: 380px;">
+                        <h3>Equilibrium Deviation Mapping (2D Heatmap)</h3>
+                        <div style="flex: 1; display: flex; align-items: center; justify-content: center; position: relative;">
+                            <canvas id="heatmap-canvas" style="width: 100%; height: 100%; max-height: 300px;"></canvas>
+                        </div>
+                        <small>Renders historical stability trends. Solid horizontal line represents perfect target equilibrium.</small>
+                    </div>
+                </div>
+                <p>System operational.</p>
+            </main>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

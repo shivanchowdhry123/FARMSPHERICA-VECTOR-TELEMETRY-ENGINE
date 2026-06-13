@@ -20,7 +20,9 @@ body[data-theme='light'] {
     --bg-surface: rgba(255,255,255,0.85);
     --bg-surface-solid: #ffffff;
     --side-panel: #e8e8e8;
-    --side-panel-hover: rgba(255,255,255,0.06);
+    --side-panel-hover: rgba(0,0,0,0.05);
+    --sidebar-text-active: #0f172a;
+    --sidebar-text-inactive: #475569;
     --text-primary: #1e293b;
     --text-secondary: #64748b;
     --text-data: #0f172a;
@@ -49,7 +51,9 @@ body[data-theme='dark'] {
     --bg-surface: rgba(15,23,42,0.6);
     --bg-surface-solid: #0f172a;
     --side-panel: #060a13;
-    --side-panel-hover: rgba(255,255,255,0.04);
+    --side-panel-hover: rgba(255,255,255,0.05);
+    --sidebar-text-active: #ffffff;
+    --sidebar-text-inactive: #94a3b8;
     --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
     --text-data: #ffffff;
@@ -149,7 +153,7 @@ aside {
     font-size: 1.1rem;
     letter-spacing: -0.3px;
     white-space: nowrap;
-    color: var(--text-primary);
+    color: var(--sidebar-text-active);
     transition: color var(--transition-speed) var(--easing);
 }
 
@@ -161,7 +165,7 @@ aside {
     align-items: center;
     gap: 0.75rem;
     padding: 0.85rem 1.5rem;
-    color: var(--text-secondary);
+    color: var(--sidebar-text-inactive);
     text-decoration: none;
     font-size: 0.88rem;
     font-weight: 500;
@@ -170,7 +174,7 @@ aside {
     white-space: nowrap;
 }
 #page-list a:hover {
-    color: var(--text-primary);
+    color: var(--sidebar-text-active);
     background: var(--side-panel-hover);
     border-left-color: rgba(59,130,246,0.5);
 }
@@ -185,12 +189,14 @@ body[data-page="settings"] .nav-settings {
     background: rgba(59,130,246,0.08);
     border-left: 3px solid var(--accent);
     font-weight: 600;
+    color: var(--sidebar-text-active);
 }
 
 .platform-name {
     padding: 0 1.5rem;
     font-size: 0.6rem;
-    color: #475569;
+    color: var(--sidebar-text-inactive);
+    opacity: 0.6;
     letter-spacing: 2.5px;
     text-transform: uppercase;
     font-weight: 500;
@@ -794,4 +800,51 @@ button {
     .app-container.show-sidebar .sidebar-overlay {
         display: block;
     }
+}
+
+/* Biosecurity Alarm Notification Banner */
+.biosecurity-banner {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(239, 68, 68, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+    z-index: 2000;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 380px;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.biosecurity-banner.show {
+    transform: translateX(0);
+}
+.biosecurity-banner-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+}
+.biosecurity-banner-body {
+    font-size: 0.88rem;
+    line-height: 1.4;
+}
+.biosecurity-banner-close {
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin: 0;
+    padding: 0 5px;
 }

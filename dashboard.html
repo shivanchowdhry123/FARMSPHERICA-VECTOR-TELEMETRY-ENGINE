@@ -16,7 +16,8 @@
             </div>
             <nav id="page-list">
                 <ul>
-                    <li><a href="dashboard.html" class="nav-dashboard ">Dashboard</a></li>
+                    <li><a href="dashboard.html" class="nav-dashboard">Dashboard</a></li>
+                    <li><a href="analytics.html" class="nav-analytics">Analytics</a></li>
                     <li><a href="logger.html" class="nav-logger">Logger</a></li>
                     <li><a href="nodes.html" class="nav-nodes">Nodes</a></li>
                     <li><a href="settings.html" class="nav-settings">Settings</a></li>
@@ -40,67 +41,41 @@
             </header>
             <main id="view-port">
             <h2>Facility Vitality Overview</h2>
-            <div class="grid-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
-                <div class="card">
-                    <h3>Hydroponic Yield</h3>
-                    <p id="card-ph">84.2%</p>
-                    <small style="color: #059669;">▲ +2.4% vs last cycle</small>
+            <div class="dashboard-grid">
+                <div class="card" style="border-color: var(--accent);">
+                    <h3>Facility Vitality Index</h3>
+                    <p id="card-fvi">--%</p>
+                    <small>Synthesized Harmony Score</small>
                 </div>
                 <div class="card">
-                    <h3>Water Recirculation</h3>
-                    <p id="card-ec">98.1%</p>
-                    <small>Efficiency: 4.2 L/min</small>
+                    <h3>pH Level</h3>
+                    <p id="card-ph">--</p>
+                    <small>Target: 5.5 - 6.5 pH</small>
                 </div>
                 <div class="card">
-                    <h3>Nutrient Saturation</h3>
-                    <p>1.62 mS</p>
-                    <small>Target: 1.5 - 2.0 mS</small>
+                    <h3>Electrical Conductivity</h3>
+                    <p id="card-ec">-- mS</p>
+                    <small>Target: 1.2 - 2.0 mS</small>
                 </div>
                 <div class="card">
-                    <h3>System Integrity</h3>
-                    <p>99.9%</p>
-                    <small>Uptime: 4,820 hrs</small>
+                    <h3>Air Temperature</h3>
+                    <p id="card-air-temp">-- °C</p>
+                    <small>Target: 20 - 26 °C</small>
                 </div>
                 <div class="card">
-                    <h3>Resource Burn</h3>
-                    <p>14.2 kW</p>
-                    <small>Avg Load: 72% Capacity</small>
-                </div>
-                <div class="card">
-                    <h3>Biosecurity Level</h3>
-                    <p>LEVEL 4</p>
-                    <small>Protocol: STERILE</small>
-                </div>
-                <div class="card">
-                    <h3>Atmospheric Temp</h3>
-                    <p id="card-temp">22.4 °C</p>
-                    <small>Target: 21.0 - 24.0 °C</small>
-                </div>
-                <div class="card">
-                    <h3>Reservoir Temp</h3>
-                    <p>19.8 °C</p>
-                    <small>Stable Condition</small>
+                    <h3>Reservoir Temperature</h3>
+                    <p id="card-res-temp">-- °C</p>
+                    <small>Target: 18 - 22 °C</small>
                 </div>
                 <div class="card">
                     <h3>Dissolved Oxygen</h3>
-                    <p>7.2 mg/L</p>
-                    <small>Target: > 6.0 mg/L</small>
-                </div>
-                <div class="card">
-                    <h3>Air Quality</h3>
-                    <div id="air-temp-display" class="telemetry-value">--°C</div>
-                </div>
-                <div class="card">
-                    <h3>Reservoir</h3>
-                    <div id="res-temp-display" class="telemetry-value">--°C</div>
-                </div>
-                <div class="card">
-                    <h3>Oxygenation</h3>
-                    <div id="do-display" class="telemetry-value">-- mg/L</div>
+                    <p id="card-do">-- mg/L</p>
+                    <small>Target: &gt; 6.0 mg/L</small>
                 </div>
                 <div class="card">
                     <h3>Luminosity</h3>
-                    <div id="lux-display" class="telemetry-value">-- lx</div>
+                    <p id="card-lux">-- lx</p>
+                    <small>Target: 15k - 25k Lux</small>
                 </div>
             </div>
             <h2>Vector Telemetry Trends</h2>
@@ -110,27 +85,16 @@
             
 
             
-            <!-- ERP Analytical Drilldown -->
+            <!-- Terminal-Style Bio-Log Console -->
             <div class="analytics-section">
-                <h2>Operational Efficiency Logs</h2>
-                <div class="analytics-placeholder" style="flex-direction: column; align-items: flex-start; padding: 20px;">
-                    <div style="width: 100%; display: flex; justify-content: space-between; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 10px;">
-                        <span><strong>TIMESTAMP</strong></span>
-                        <span><strong>SOURCE</strong></span>
-                        <span><strong>EVENT TYPE</strong></span>
-                        <span><strong>SEVERITY</strong></span>
+                <h2>Vector Engine Monospaced Console</h2>
+                <div class="analytics-placeholder" style="padding: 0; overflow: hidden; border-radius: var(--radius-md); border: 1px solid var(--border);">
+                    <div id="terminal-header" style="background: rgba(0,0,0,0.2); padding: 10px 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; font-size: 0.75rem; font-family: monospace; color: var(--text-secondary);">
+                        <span>FARMSPHERICA SYSTEM LOGS [Transient Session Mode]</span>
+                        <span style="color: var(--success); font-weight: bold;">● ENGINE ONLINE</span>
                     </div>
-                    <div style="width: 100%; display: flex; justify-content: space-between; font-family: monospace;">
-                        <span>2026-06-11 22:40</span>
-                        <span>ZONE_B_NODE</span>
-                        <span>BASELINE_DRIFT</span>
-                        <span style="color: #d97706;">WARNING</span>
-                    </div>
-                    <div style="width: 100%; display: flex; justify-content: space-between; font-family: monospace;">
-                        <span>2026-06-11 21:15</span>
-                        <span>PUMP_ARRAY_01</span>
-                        <span>MAINTENANCE</span>
-                        <span style="color: #2563eb;">INFO</span>
+                    <div id="terminal-body" style="height: 180px; overflow-y: auto; padding: 15px; font-family: monospace; font-size: 0.82rem; background: rgba(0,0,0,0.15); display: flex; flex-direction: column; gap: 6px; line-height: 1.4;">
+                        <!-- Terminal dynamic stream -->
                     </div>
                 </div>
             </div>

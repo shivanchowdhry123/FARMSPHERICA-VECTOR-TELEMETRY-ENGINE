@@ -16,6 +16,7 @@
             <nav id="page-list">
                 <ul>
                     <li><a href="dashboard.html" class="nav-dashboard">Dashboard</a></li>
+                    <li><a href="analytics.html" class="nav-analytics">Analytics</a></li>
                     <li><a href="logger.html" class="nav-logger">Logger</a></li>
                     <li><a href="nodes.html" class="nav-nodes">Nodes</a></li>
                     <li><a href="settings.html" class="nav-settings">Settings</a></li>
@@ -77,6 +78,24 @@
                         color: #f59e0b;
                         font-size: 0.6rem;
                         align-self: flex-end;
+                    }
+
+                    /* Warning state */
+                    .node-card[data-status="warning"] {
+                        border-color: rgba(239, 68, 68, 0.5);
+                        box-shadow: 0 0 15px rgba(239, 68, 68, 0.15);
+                        animation: pulse-warn 1.5s infinite alternate;
+                    }
+                    .node-card[data-status="warning"] .node-status { color: #ef4444; }
+                    .node-card[data-status="warning"]::before {
+                        content: '●';
+                        color: #ef4444;
+                        font-size: 0.6rem;
+                        align-self: flex-end;
+                    }
+                    @keyframes pulse-warn {
+                        0% { border-color: rgba(239, 68, 68, 0.4); }
+                        100% { border-color: rgba(239, 68, 68, 0.8); }
                     }
                 </style>
 
