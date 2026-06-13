@@ -45,6 +45,61 @@
                         </button>
                     </div>
 
+                    <div style="margin-bottom: 30px;" id="comfort-zone-panel">
+                        <h3>⚙️ Comfort Zone Thresholds</h3>
+                        <p style="font-size:0.82rem; color: var(--text-secondary, #94a3b8); margin: 6px 0 14px;">Override target crop baselines for the Biosecurity Engine.</p>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">pH Min</label>
+                                <input type="number" id="cfg-phMin" step="0.1" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">pH Max</label>
+                                <input type="number" id="cfg-phMax" step="0.1" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">EC Min (mS)</label>
+                                <input type="number" id="cfg-ecMin" step="0.1" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">EC Max (mS)</label>
+                                <input type="number" id="cfg-ecMax" step="0.1" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Air Temp Min (°C)</label>
+                                <input type="number" id="cfg-airTempMin" step="0.5" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Air Temp Max (°C)</label>
+                                <input type="number" id="cfg-airTempMax" step="0.5" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Res Temp Min (°C)</label>
+                                <input type="number" id="cfg-resTempMin" step="0.5" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Res Temp Max (°C)</label>
+                                <input type="number" id="cfg-resTempMax" step="0.5" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">DO Min (mg/L)</label>
+                                <input type="number" id="cfg-doMin" step="0.1" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px; color: var(--text-secondary, #94a3b8);">(DO has no upper bound)</label>
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Lux Min</label>
+                                <input type="number" id="cfg-luxMin" step="500" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                            <div>
+                                <label style="font-size:0.8rem; display:block; margin-bottom:4px;">Lux Max</label>
+                                <input type="number" id="cfg-luxMax" step="500" style="width:100%; padding:8px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;">
+                            </div>
+                        </div>
+                        <button id="save-comfort-zones" style="margin-top: 14px; background: var(--accent); color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 8px; font-weight: 600;">Save Comfort Zones</button>
+                    </div>
+
                     <div style="margin-bottom: 30px;">
                         <h3>Measurement Metrics</h3>
                         <label style="display: block; margin: 10px 0;">

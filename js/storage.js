@@ -4,6 +4,28 @@
  */
 
 const LOCAL_STORAGE_KEY = 'telemetry';
+const SETTINGS_KEY = 'farmspherica_settings';
+
+const DEFAULT_SETTINGS = {
+    phMin: 5.5, phMax: 6.5,
+    ecMin: 1.2, ecMax: 2.0,
+    airTempMin: 20.0, airTempMax: 26.0,
+    resTempMin: 18.0, resTempMax: 22.0,
+    doMin: 6.0,
+    luxMin: 15000, luxMax: 25000,
+    units: 'metric',
+    emailAlerts: true,
+    smsAlerts: true
+};
+
+export function getSettings() {
+    const saved = localStorage.getItem(SETTINGS_KEY);
+    return saved ? JSON.parse(saved) : DEFAULT_SETTINGS;
+}
+
+export function saveSettings(settings) {
+    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+}
 
 /**
  * Retrieves all telemetry records.

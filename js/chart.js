@@ -1,4 +1,4 @@
-import { getTelemetry } from './storage.js';
+import { getTelemetry, getSettings } from './storage.js';
 
 // Custom zero-dependency Canvas charts
 
@@ -22,21 +22,35 @@ export function initAnalyticsCharts() {
 // Helper to calculate record deviation for FVI
 export function calculateRecordDeviation(record) {
     if (!record) return 0;
+    const settings = getSettings();
+    const nominalPh = (settings.phMin + settings.phMax) / 2;
+    const spanPh = (settings.phMax - settings.phMin) / 2;
+    const nominalEc = (settings.ecMin + settings.ecMax) / 2;
+    const spanEc = (settings.ecMax - settings.ecMin) / 2;
+    const nominalAir = (settings.airTempMin + settings.airTempMax) / 2;
+    const spanAir = (settings.airTempMax - settings.airTempMin) / 2;
+    const nominalRes = (settings.resTempMin + settings.resTempMax) / 2;
+    const spanRes = (settings.resTempMax - settings.resTempMin) / 2;
+    const nominalDO = settings.doMin + 2.0;
+    const spanDO = 2.0;
+    const nominalLux = (settings.luxMin + settings.luxMax) / 2;
+    const spanLux = (settings.luxMax - settings.luxMin) / 2;
+
     const metrics = [
-        { val: record.ph, target: 6.0, span: 0.5 },
-        { val: record.ec, target: 1.6, span: 0.4 },
-        { val: record.airTemp, target: 23.0, span: 3.0 },
-        { val: record.resTemp, target: 20.0, span: 2.0 },
-        { val: record.dissolvedOxygen, target: 8.0, span: 2.0, isAtLeast: true },
-        { val: record.lux, target: 20000, span: 5000 }
+        { val: record.ph, target: nominalPh, span: spanPh || 0.5 },
+        { val: record.ec, target: nominalEc, span: spanEc || 0.4 },
+        { val: record.airTemp, target: nominalAir, span: spanAir || 3.0 },
+        { val: record.resTemp, target: nominalRes, span: spanRes || 2.0 },
+        { val: record.dissolvedOxygen, target: nominalDO, span: spanDO || 2.0, isAtLeast: true },
+        { val: record.lux, target: nominalLux, span: spanLux || 5000 }
     ];
 
     let totalDeviation = 0;
     metrics.forEach(m => {
         let dev = 0;
         if (m.isAtLeast) {
-            if (m.val < 6.0) {
-                dev = (6.0 - m.val) / 2.0 + 1.0;
+            if (m.val < settings.doMin) {
+                dev = (settings.doMin - m.val) / 2.0 + 1.0;
             } else if (m.val < m.target) {
                 dev = (m.target - m.val) / m.span;
             }
@@ -74,9 +88,24 @@ function drawRadarChart(canvas, dataset) {
     const latest = dataset[dataset.length - 1];
     
     // Parameters configuration
+    const settings = getSettings();
     const labels = ['pH', 'EC', 'Air Temp', 'Res Temp', 'D.O.', 'Lux'];
-    const nominal = [6.0, 1.6, 23.0, 20.0, 8.0, 20000];
-    const halfSpan = [0.5, 0.4, 3.0, 2.0, 2.0, 5000];
+    const nominal = [
+        (settings.phMin + settings.phMax) / 2,
+        (settings.ecMin + settings.ecMax) / 2,
+        (settings.airTempMin + settings.airTempMax) / 2,
+        (settings.resTempMin + settings.resTempMax) / 2,
+        settings.doMin + 2.0,
+        (settings.luxMin + settings.luxMax) / 2
+    ];
+    const halfSpan = [
+        (settings.phMax - settings.phMin) / 2 || 0.5,
+        (settings.ecMax - settings.ecMin) / 2 || 0.4,
+        (settings.airTempMax - settings.airTempMin) / 2 || 3.0,
+        (settings.resTempMax - settings.resTempMin) / 2 || 2.0,
+        2.0,
+        (settings.luxMax - settings.luxMin) / 2 || 5000
+    ];
     
     // Ensure properties are loaded correctly
     const actuals = [
@@ -97,8 +126,8 @@ function drawRadarChart(canvas, dataset) {
     function getNormalizedRadius(val, nom, span, isDO = false) {
         let deviation = 0;
         if (isDO) {
-            if (val < 6.0) {
-                deviation = (6.0 - val) / 2.0 + 1.0;
+            if (val < settings.doMin) {
+                deviation = (settings.doMin - val) / 2.0 + 1.0;
             } else if (val < nom) {
                 deviation = (nom - val) / span;
             }
@@ -331,13 +360,28 @@ function drawHeatmap(canvas, dataset) {
     ctx.stroke();
 
     function getCellColor(val, i) {
-        const nominal = [6.0, 1.6, 23.0, 20.0, 8.0, 20000];
-        const span = [0.5, 0.4, 3.0, 2.0, 2.0, 5000];
+        const settings = getSettings();
+        const nominal = [
+            (settings.phMin + settings.phMax) / 2,
+            (settings.ecMin + settings.ecMax) / 2,
+            (settings.airTempMin + settings.airTempMax) / 2,
+            (settings.resTempMin + settings.resTempMax) / 2,
+            settings.doMin + 2.0,
+            (settings.luxMin + settings.luxMax) / 2
+        ];
+        const span = [
+            (settings.phMax - settings.phMin) / 2 || 0.5,
+            (settings.ecMax - settings.ecMin) / 2 || 0.4,
+            (settings.airTempMax - settings.airTempMin) / 2 || 3.0,
+            (settings.resTempMax - settings.resTempMin) / 2 || 2.0,
+            2.0,
+            (settings.luxMax - settings.luxMin) / 2 || 5000
+        ];
         
         let deviation = 0;
         if (i === 4) { // DO
-            if (val < 6.0) {
-                deviation = (6.0 - val) / 2.0 + 1.0;
+            if (val < settings.doMin) {
+                deviation = (settings.doMin - val) / 2.0 + 1.0;
             } else if (val < nominal[i]) {
                 deviation = (nominal[i] - val) / span[i];
             }

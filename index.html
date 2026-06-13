@@ -257,6 +257,7 @@
 
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
+            localStorage.setItem('farmspherica_auth', 'true');
             window.location.href = 'dashboard.html';
         });
     </script>

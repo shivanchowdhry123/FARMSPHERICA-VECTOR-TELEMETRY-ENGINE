@@ -1,4 +1,4 @@
-import { initializeState, getTelemetry, addRecord, removeRecord, exportTelemetryBackup, importTelemetryBackup } from './storage.js';
+import { initializeState, getTelemetry, addRecord, removeRecord, exportTelemetryBackup, importTelemetryBackup, getSettings, saveSettings } from './storage.js';
 import { initAnalyticsCharts, calculateRecordDeviation } from './chart.js';
 
 export function calculateFVI(record) {
@@ -33,50 +33,51 @@ export function calculateFVI(record) {
 
 export function checkTelemetryThresholds(record) {
     if (!record) return { active: false, alarms: [], remediation: [] };
+    const s = getSettings();
     const alarms = [];
     const remediation = [];
 
-    if (record.ph < 5.5) {
+    if (record.ph < s.phMin) {
         alarms.push("pH level too low");
         remediation.push("Inject Potassium Hydroxide (pH Up) buffer injection system.");
-    } else if (record.ph > 6.5) {
+    } else if (record.ph > s.phMax) {
         alarms.push("pH level too high");
         remediation.push("Inject Phosphoric Acid (pH Down) buffering agent.");
     }
 
-    if (record.ec < 1.2) {
+    if (record.ec < s.ecMin) {
         alarms.push("Electrical Conductivity (EC) nutrient depletion");
         remediation.push("Increase secondary dosing line concentration target (+10%).");
-    } else if (record.ec > 2.0) {
+    } else if (record.ec > s.ecMax) {
         alarms.push("EC nutrient saturation");
         remediation.push("Dilute reservoir with clean RO water recirculation feed.");
     }
 
-    if (record.airTemp < 20) {
+    if (record.airTemp < s.airTempMin) {
         alarms.push("Air Temperature below comfort zone");
         remediation.push("Enable HVAC stage-1 heat pump cycles.");
-    } else if (record.airTemp > 26) {
+    } else if (record.airTemp > s.airTempMax) {
         alarms.push("Air Temperature exceeds comfort threshold");
         remediation.push("Initiate secondary extractor fan arrays and intake cooling valves.");
     }
 
-    if (record.resTemp < 18) {
+    if (record.resTemp < s.resTempMin) {
         alarms.push("Nutrient reservoir water temperature too low");
         remediation.push("Activate in-line reservoir heating elements.");
-    } else if (record.resTemp > 22) {
+    } else if (record.resTemp > s.resTempMax) {
         alarms.push("Nutrient reservoir temperature exceeds stable limits");
         remediation.push("Engage chiller loop pump system stage-2.");
     }
 
-    if (record.dissolvedOxygen < 6.0) {
+    if (record.dissolvedOxygen < s.doMin) {
         alarms.push("Critical Low Oxygenation (Dissolved Oxygen)");
         remediation.push("Increase venturi nozzle pressure and activate backup oxygen pump.");
     }
 
-    if (record.lux < 15000) {
+    if (record.lux < s.luxMin) {
         alarms.push("Irradiance deficiency (Lux)");
         remediation.push("Increase overhead LED lighting intensity cycle (+15%).");
-    } else if (record.lux > 25000) {
+    } else if (record.lux > s.luxMax) {
         alarms.push("Irradiance overload (Lux)");
         remediation.push("Dim overhead LED light racks to safe absorption ceiling.");
     }
@@ -272,7 +273,7 @@ document.addEventListener('click', (e) => {
             break;
 
         case 'save-settings':
-            alert("Configuration settings updated successfully. (mocked)");
+            saveSettingsFromUI();
             break;
 
         case 'delete-account':
@@ -312,6 +313,13 @@ document.addEventListener('change', async (e) => {
 document.addEventListener('DOMContentLoaded', () => {
     initializeState();
     const page = document.body.dataset.page;
+
+    // ── Authentication Guard ──────────────────────────────────
+    const protectedPages = ['dashboard', 'analytics', 'nav-logger', 'logger', 'nodes', 'settings', 'add-data'];
+    if (protectedPages.includes(page) && !localStorage.getItem('farmspherica_auth')) {
+        window.location.href = 'index.html';
+        return;
+    }
 
     // --- Global Biosecurity Banner Check ---
     const data = getTelemetry();
@@ -362,6 +370,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
         }
+    }
+
+    // --- Settings page initialization ---
+    if (page === 'settings') {
+        initSettingsPage();
     }
 
     // --- Add-data form submission (add.html, form id="add-form") ---
@@ -664,3 +677,68 @@ function renderTelemetryChart() {
         }
     });
 }
+
+// ─── Settings Page: Load & Save Comfort Zones ─────────────────────
+function initSettingsPage() {
+    const s = getSettings();
+
+    const fields = ['phMin', 'phMax', 'ecMin', 'ecMax', 'airTempMin', 'airTempMax', 'resTempMin', 'resTempMax', 'doMin', 'luxMin', 'luxMax'];
+    fields.forEach(key => {
+        const el = document.getElementById(`cfg-${key}`);
+        if (el) el.value = s[key];
+    });
+
+    const saveBtn = document.getElementById('save-comfort-zones');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', () => {
+            saveSettingsFromUI();
+        });
+    }
+}
+
+function saveSettingsFromUI() {
+    const s = getSettings();
+
+    const fieldMap = {
+        'cfg-phMin': 'phMin', 'cfg-phMax': 'phMax',
+        'cfg-ecMin': 'ecMin', 'cfg-ecMax': 'ecMax',
+        'cfg-airTempMin': 'airTempMin', 'cfg-airTempMax': 'airTempMax',
+        'cfg-resTempMin': 'resTempMin', 'cfg-resTempMax': 'resTempMax',
+        'cfg-doMin': 'doMin',
+        'cfg-luxMin': 'luxMin', 'cfg-luxMax': 'luxMax'
+    };
+
+    for (const [elId, key] of Object.entries(fieldMap)) {
+        const el = document.getElementById(elId);
+        if (el && el.value !== '') {
+            s[key] = parseFloat(el.value);
+        }
+    }
+
+    // Save units preference
+    const imperialRadio = document.querySelector('input[name="units"]:not(:checked)');
+    if (imperialRadio) {
+        const checkedRadio = document.querySelector('input[name="units"]:checked');
+        if (checkedRadio) {
+            s.units = checkedRadio.parentElement.textContent.trim().includes('Imperial') ? 'imperial' : 'metric';
+        }
+    }
+
+    saveSettings(s);
+
+    // Visual feedback
+    const banner = document.createElement('div');
+    banner.textContent = '✅ Comfort zone thresholds saved successfully.';
+    banner.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#059669;color:white;padding:12px 24px;border-radius:10px;font-size:0.9rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.3);animation:fadeIn 0.3s ease;';
+    document.body.appendChild(banner);
+    setTimeout(() => banner.remove(), 2500);
+}
+
+// ─── Logout handler ───────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+    if (e.target.id === 'user-logout') {
+        e.preventDefault();
+        localStorage.removeItem('farmspherica_auth');
+        window.location.href = 'index.html';
+    }
+});
