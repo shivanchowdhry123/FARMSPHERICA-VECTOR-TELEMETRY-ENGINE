@@ -277,7 +277,11 @@ function renderTelemetryChart() {
     const labels = data.map(item => item.date);
     const phData = data.map(item => item.ph);
     const ecData = data.map(item => item.ec);
-    const tempData = data.map(item => item.temp);
+    const airTempData = data.map(item => item.airTemp);
+    const resTempData = data.map(item => item.resTemp);
+    const doData = data.map(item => item.dissolvedOxygen);
+    const luxData = data.map(item => item.lux);
+
     if (telemetryChart) telemetryChart.destroy();
     telemetryChart = new Chart(ctx, {
         type: 'line',
@@ -288,38 +292,86 @@ function renderTelemetryChart() {
                     label: 'pH',
                     data: phData,
                     borderColor: '#34D399',
-                    backgroundColor: 'rgba(52,211,153,0.1)',
+                    backgroundColor: 'rgba(52,211,153,0.08)',
                     tension: 0.3,
                     fill: true,
+                    yAxisID: 'y',
                 },
                 {
-                    label: 'EC',
+                    label: 'EC (mS)',
                     data: ecData,
                     borderColor: '#60A5FA',
-                    backgroundColor: 'rgba(96,165,250,0.1)',
+                    backgroundColor: 'rgba(96,165,250,0.08)',
                     tension: 0.3,
                     fill: true,
+                    yAxisID: 'y',
                 },
                 {
-                    label: 'Temp (°C)',
-                    data: tempData,
+                    label: 'Air Temp (°C)',
+                    data: airTempData,
                     borderColor: '#F472B6',
-                    backgroundColor: 'rgba(244,114,182,0.1)',
+                    backgroundColor: 'rgba(244,114,182,0.08)',
                     tension: 0.3,
                     fill: true,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'Res Temp (°C)',
+                    data: resTempData,
+                    borderColor: '#FBBF24',
+                    backgroundColor: 'rgba(251,191,36,0.08)',
+                    tension: 0.3,
+                    fill: true,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'DO (mg/L)',
+                    data: doData,
+                    borderColor: '#A78BFA',
+                    backgroundColor: 'rgba(167,139,250,0.08)',
+                    tension: 0.3,
+                    fill: true,
+                    yAxisID: 'y',
+                },
+                {
+                    label: 'Lux',
+                    data: luxData,
+                    borderColor: '#FB923C',
+                    backgroundColor: 'rgba(251,146,60,0.08)',
+                    tension: 0.3,
+                    fill: true,
+                    yAxisID: 'y1',
+                    borderDash: [5, 3],
                 }
             ]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            interaction: {
+                mode: 'index',
+                intersect: false,
+            },
             plugins: {
                 legend: { position: 'top' },
                 tooltip: { mode: 'index', intersect: false }
             },
             scales: {
-                x: { display: true, title: { display: true, text: 'Date' } },
-                y: { display: true, title: { display: true, text: 'Value' } }
+                x: {
+                    display: true,
+                    title: { display: true, text: 'Date' }
+                },
+                y: {
+                    display: true,
+                    position: 'left',
+                    title: { display: true, text: 'pH / EC / Temp / DO' },
+                },
+                y1: {
+                    display: true,
+                    position: 'right',
+                    title: { display: true, text: 'Lux (lx)' },
+                    grid: { drawOnChartArea: false },
+                }
             }
         }
     });
