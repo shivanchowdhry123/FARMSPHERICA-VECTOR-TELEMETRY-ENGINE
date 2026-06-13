@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farmspherica | Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body data-page="dashboard">
+    <div class="app-container">
+        <aside id="sidebar">
+            <div class="logo-area">
+                <img src="images/logo.svg" alt="Logo" class="logo">
+                <span>Farmspherica</span>
+            </div>
+            <nav id="page-list">
+                <ul>
+                    <li><a href="dashboard.html" class="nav-dashboard ">Dashboard</a></li>
+                    <li><a href="logger.html" class="nav-logger">Logger</a></li>
+                    <li><a href="nodes.html" class="nav-nodes">Nodes</a></li>
+                    <li><a href="settings.html" class="nav-settings">Settings</a></li>
+                </ul>
+            </nav>
+             <div class="platform-name">VECTOR ENGINE v1.0</div>
+        </aside>
+
+        <div id="sidebar-overlay" class="sidebar-overlay" data-action="toggle-sidebar"></div>
+        
+            <div class="main-content">
+                <header>
+                    <button data-action="toggle-sidebar" id="toggle-sidebar">☰</button>
+                    <h2 id="page-title">Dashboard</h2>
+                    <div class="user-menu" id="user-menu">
+                        <img src="images/profile-placeholder.png" style="width:30px; border-radius:50%;">
+                        <div id="options-bar">
+                        <p><a href="settings.html" id="user-profile">Profile</a> | <a href="index.html" id="user-logout">Logout</a></p>
+                        </div>
+                </div>
+            </header>
+            <main id="view-port">
+            <h2>Facility Vitality Overview</h2>
+            <div class="grid-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                <div class="card">
+                    <h3>Hydroponic Yield</h3>
+                    <p id="card-ph">84.2%</p>
+                    <small style="color: #059669;">▲ +2.4% vs last cycle</small>
+                </div>
+                <div class="card">
+                    <h3>Water Recirculation</h3>
+                    <p id="card-ec">98.1%</p>
+                    <small>Efficiency: 4.2 L/min</small>
+                </div>
+                <div class="card">
+                    <h3>Nutrient Saturation</h3>
+                    <p>1.62 mS</p>
+                    <small>Target: 1.5 - 2.0 mS</small>
+                </div>
+                <div class="card">
+                    <h3>System Integrity</h3>
+                    <p>99.9%</p>
+                    <small>Uptime: 4,820 hrs</small>
+                </div>
+                <div class="card">
+                    <h3>Resource Burn</h3>
+                    <p>14.2 kW</p>
+                    <small>Avg Load: 72% Capacity</small>
+                </div>
+                <div class="card">
+                    <h3>Biosecurity Level</h3>
+                    <p>LEVEL 4</p>
+                    <small>Protocol: STERILE</small>
+                </div>
+                <div class="card">
+                    <h3>Atmospheric Temp</h3>
+                    <p id="card-temp">22.4 °C</p>
+                    <small>Target: 21.0 - 24.0 °C</small>
+                </div>
+                <div class="card">
+                    <h3>Reservoir Temp</h3>
+                    <p>19.8 °C</p>
+                    <small>Stable Condition</small>
+                </div>
+                <div class="card">
+                    <h3>Dissolved Oxygen</h3>
+                    <p>7.2 mg/L</p>
+                    <small>Target: > 6.0 mg/L</small>
+                </div>
+                <div class="card">
+                    <h3>Air Quality</h3>
+                    <div id="air-temp-display" class="telemetry-value">--°C</div>
+                </div>
+                <div class="card">
+                    <h3>Reservoir</h3>
+                    <div id="res-temp-display" class="telemetry-value">--°C</div>
+                </div>
+                <div class="card">
+                    <h3>Oxygenation</h3>
+                    <div id="do-display" class="telemetry-value">-- mg/L</div>
+                </div>
+                <div class="card">
+                    <h3>Luminosity</h3>
+                    <div id="lux-display" class="telemetry-value">-- lx</div>
+                </div>
+            </div>
+            <h2>Vector Telemetry Trends</h2>
+            <div class="chart-container" style="position:relative; height:300px; margin-top:20px;">
+                <canvas id="telemetry-chart"></canvas>
+            </div>
+            
+
+            
+            <!-- ERP Analytical Drilldown -->
+            <div class="analytics-section">
+                <h2>Operational Efficiency Logs</h2>
+                <div class="analytics-placeholder" style="flex-direction: column; align-items: flex-start; padding: 20px;">
+                    <div style="width: 100%; display: flex; justify-content: space-between; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; margin-bottom: 10px;">
+                        <span><strong>TIMESTAMP</strong></span>
+                        <span><strong>SOURCE</strong></span>
+                        <span><strong>EVENT TYPE</strong></span>
+                        <span><strong>SEVERITY</strong></span>
+                    </div>
+                    <div style="width: 100%; display: flex; justify-content: space-between; font-family: monospace;">
+                        <span>2026-06-11 22:40</span>
+                        <span>ZONE_B_NODE</span>
+                        <span>BASELINE_DRIFT</span>
+                        <span style="color: #d97706;">WARNING</span>
+                    </div>
+                    <div style="width: 100%; display: flex; justify-content: space-between; font-family: monospace;">
+                        <span>2026-06-11 21:15</span>
+                        <span>PUMP_ARRAY_01</span>
+                        <span>MAINTENANCE</span>
+                        <span style="color: #2563eb;">INFO</span>
+                    </div>
+                </div>
+            </div>
+                <p>System operational.</p>
+            </main>
+        </div>
+    </div>
+    <script type="module" src="js/main.js"></script>
+<div id="last-updated"></div>
+</body>
+</html>
