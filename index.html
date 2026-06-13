@@ -257,7 +257,11 @@
 
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
             localStorage.setItem('farmspherica_auth', 'true');
+            localStorage.setItem('farmspherica_user_email', email);
+            localStorage.setItem('farmspherica_user_password', password);
             window.location.href = 'dashboard.html';
         });
     </script>

@@ -130,6 +130,7 @@ export function updateDashboardCards() {
 
     // Get the most recent entry
     const latest = data[data.length - 1];
+    const s = getSettings();
 
     const fviEl = document.getElementById('card-fvi');
     const phEl = document.getElementById('card-ph');
@@ -146,6 +147,23 @@ export function updateDashboardCards() {
     if (resTempEl) resTempEl.textContent = `${latest.resTemp} °C`;
     if (doEl) doEl.textContent = `${latest.dissolvedOxygen} mg/L`;
     if (luxEl) luxEl.textContent = `${latest.lux.toLocaleString()} lx`;
+
+    // Dynamic card subtitles from settings
+    const subtitles = {
+        'card-ph': `Target: ${s.phMin} - ${s.phMax} pH`,
+        'card-ec': `Target: ${s.ecMin} - ${s.ecMax} mS`,
+        'card-air-temp': `Target: ${s.airTempMin} - ${s.airTempMax} °C`,
+        'card-res-temp': `Target: ${s.resTempMin} - ${s.resTempMax} °C`,
+        'card-do': `Target: > ${s.doMin} mg/L`,
+        'card-lux': `Target: ${(s.luxMin/1000).toFixed(0)}k - ${(s.luxMax/1000).toFixed(0)}k Lux`
+    };
+    for (const [cardId, text] of Object.entries(subtitles)) {
+        const el = document.getElementById(cardId);
+        if (el && el.parentElement) {
+            const small = el.parentElement.querySelector('small');
+            if (small) small.textContent = text;
+        }
+    }
 }
 
 export function updateTerminalLogs() {
@@ -682,6 +700,7 @@ function renderTelemetryChart() {
 function initSettingsPage() {
     const s = getSettings();
 
+    // Load comfort zone fields
     const fields = ['phMin', 'phMax', 'ecMin', 'ecMax', 'airTempMin', 'airTempMax', 'resTempMin', 'resTempMax', 'doMin', 'luxMin', 'luxMax'];
     fields.forEach(key => {
         const el = document.getElementById(`cfg-${key}`);
@@ -692,6 +711,80 @@ function initSettingsPage() {
     if (saveBtn) {
         saveBtn.addEventListener('click', () => {
             saveSettingsFromUI();
+        });
+    }
+
+    // ─── Account Details ──────────────────────────────────────
+    const emailEl = document.getElementById('account-email');
+    const passEl = document.getElementById('account-password');
+    const editBtn = document.getElementById('edit-password-btn');
+    const savePassBtn = document.getElementById('save-password-btn');
+    const cancelPassBtn = document.getElementById('cancel-password-btn');
+    const toggleVisBtn = document.getElementById('toggle-password-visibility');
+
+    if (emailEl) emailEl.value = localStorage.getItem('farmspherica_user_email') || '';
+    if (passEl) passEl.value = localStorage.getItem('farmspherica_user_password') || '';
+
+    let originalPassword = passEl ? passEl.value : '';
+
+    // Toggle password visibility
+    if (toggleVisBtn && passEl) {
+        toggleVisBtn.addEventListener('click', () => {
+            const isHidden = passEl.type === 'password';
+            passEl.type = isHidden ? 'text' : 'password';
+            toggleVisBtn.textContent = isHidden ? '🙈' : '👁️';
+        });
+    }
+
+    // Edit password mode
+    if (editBtn) {
+        editBtn.addEventListener('click', () => {
+            passEl.removeAttribute('readonly');
+            passEl.style.opacity = '1';
+            passEl.style.borderColor = 'var(--accent)';
+            passEl.focus();
+            editBtn.style.display = 'none';
+            savePassBtn.style.display = 'inline-block';
+            cancelPassBtn.style.display = 'inline-block';
+        });
+    }
+
+    // Save password
+    if (savePassBtn) {
+        savePassBtn.addEventListener('click', () => {
+            const newPass = passEl.value.trim();
+            if (newPass.length < 1) {
+                alert('Password cannot be empty.');
+                return;
+            }
+            localStorage.setItem('farmspherica_user_password', newPass);
+            originalPassword = newPass;
+            passEl.setAttribute('readonly', '');
+            passEl.style.opacity = '';
+            passEl.style.borderColor = '';
+            editBtn.style.display = 'inline-block';
+            savePassBtn.style.display = 'none';
+            cancelPassBtn.style.display = 'none';
+
+            // Toast
+            const toast = document.createElement('div');
+            toast.textContent = '✅ Password updated successfully.';
+            toast.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#059669;color:white;padding:12px 24px;border-radius:10px;font-size:0.9rem;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.3);';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 2500);
+        });
+    }
+
+    // Cancel password edit
+    if (cancelPassBtn) {
+        cancelPassBtn.addEventListener('click', () => {
+            passEl.value = originalPassword;
+            passEl.setAttribute('readonly', '');
+            passEl.style.opacity = '';
+            passEl.style.borderColor = '';
+            editBtn.style.display = 'inline-block';
+            savePassBtn.style.display = 'none';
+            cancelPassBtn.style.display = 'none';
         });
     }
 }

@@ -119,9 +119,22 @@
 
                     <div style="margin-bottom: 30px;">
                         <h3>Account Details</h3>
-                        <p>Email: [EMAIL_ADDRESS]</p>
-                        <p>Password: ********</p>
-                        <button data-action="change-password" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer;">Change Password</button>
+                        <div style="margin: 10px 0;">
+                            <label style="font-size:0.8rem; display:block; margin-bottom:4px; color: var(--text-secondary, #94a3b8);">Email</label>
+                            <input type="email" id="account-email" readonly style="width:100%; max-width:400px; padding:8px 12px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px; opacity:0.7;">
+                        </div>
+                        <div style="margin: 10px 0;">
+                            <label style="font-size:0.8rem; display:block; margin-bottom:4px; color: var(--text-secondary, #94a3b8);">Password</label>
+                            <div style="display:flex; gap:8px; align-items:center; max-width:400px;">
+                                <input type="password" id="account-password" style="flex:1; padding:8px 12px; border:1px solid var(--input-border, #334155); background:var(--input-bg, rgba(255,255,255,0.05)); color:var(--text-primary, #f8fafc); border-radius:8px;" readonly>
+                                <button id="toggle-password-visibility" style="background:var(--input-bg, rgba(255,255,255,0.05)); border:1px solid var(--input-border, #334155); color:var(--text-primary, #f8fafc); padding:8px 12px; border-radius:8px; cursor:pointer; font-size:0.85rem;" title="Show/Hide">👁️</button>
+                            </div>
+                        </div>
+                        <div style="margin-top: 12px; display:flex; gap:8px;">
+                            <button id="edit-password-btn" style="background: #1a1c1e; color: #fff; padding: 10px 20px; border: none; cursor: pointer; border-radius:8px;">Edit Password</button>
+                            <button id="save-password-btn" style="background: var(--accent); color: #fff; padding: 10px 20px; border: none; cursor: pointer; border-radius:8px; display:none;">Save Password</button>
+                            <button id="cancel-password-btn" style="background: var(--input-bg, rgba(255,255,255,0.05)); color: var(--text-primary, #f8fafc); padding: 10px 20px; border: 1px solid var(--input-border, #334155); cursor: pointer; border-radius:8px; display:none;">Cancel</button>
+                        </div>
                     </div>
 
                     <div style="margin-bottom: 30px;">
