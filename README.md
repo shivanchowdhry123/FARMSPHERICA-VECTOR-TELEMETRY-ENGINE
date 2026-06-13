@@ -63,7 +63,6 @@ add.html            → Telemetry vector ingestion form
 - **HTML5** — Semantic markup
 - **CSS3** — Custom properties, grid, flexbox, backdrop-filter
 - **JavaScript (ES Modules)** — No frameworks, no build tools
-- **Chart.js** (CDN) — Dashboard trend chart only
 - **localStorage** — All persistence
 
 ## License
