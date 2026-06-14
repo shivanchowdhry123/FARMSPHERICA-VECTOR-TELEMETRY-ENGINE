@@ -398,18 +398,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Add-data form submission (add.html, form id="add-form") ---
     const addForm = document.getElementById('add-form');
     if (addForm) {
-        // Set today's date as default
+        // Set today's date and current time as defaults
         const dateInput = document.getElementById('date');
         if (dateInput) {
             dateInput.value = new Date().toISOString().split('T')[0];
+        }
+        const timeInput = document.getElementById('time');
+        if (timeInput) {
+            const now = new Date();
+            timeInput.value = now.toTimeString().slice(0, 5); // HH:MM
         }
         
         addForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
+            const dateVal = document.getElementById('date')?.value || new Date().toISOString().split('T')[0];
+            const timeVal = document.getElementById('time')?.value || '00:00';
+
             const record = {
                 id: crypto.randomUUID(),
-                date: document.getElementById('date')?.value || new Date().toISOString().split('T')[0],
+                date: `${dateVal} ${timeVal}`,
                 ph: parseFloat(document.getElementById('ph').value),
                 ec: parseFloat(document.getElementById('ec').value),
                 airTemp: parseFloat(document.getElementById('airTemp').value),
@@ -528,11 +536,13 @@ function renderLoggerTable() {
 
     data.forEach(item => {
         const row = document.createElement('tr');
+        // Format timestamp — show date + time if time is present
+        const timestamp = item.date || '—';
         row.innerHTML = `
             <td class="checkbox-col" style="padding: 10px; text-align: center;">
                 <input type="checkbox" class="row-checkbox" data-id="${item.id}">
             </td>
-            <td style="padding: 10px;">${item.date}</td>
+            <td style="padding: 10px;">${timestamp}</td>
             <td style="padding: 10px;">${item.ph}</td>
             <td style="padding: 10px;">${item.ec}</td>
             <td style="padding: 10px;">${item.airTemp}°C</td>
